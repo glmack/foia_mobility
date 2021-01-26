@@ -18,3 +18,4 @@ filepath = '/Users/lee/Documents/code/foia_mobility/TRip_Relocation.pdf'
 
 dfs = tabula.read_pdf(filepath, multiple_tables=True, pages='all') # stream=True
 dfs2 = tabula.read_pdf(filepath, multiple_tables=True, pages='all', stream='True')
+x = dfs[16].T
