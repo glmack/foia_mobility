@@ -1,0 +1,725 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
+  "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" version="XHTML+RDFa 1.0" dir="ltr"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Generator" content="Drupal 7 (http://drupal.org)" />
+<link rel="canonical" href="/report/gsa-ogp-business-travel-and-relocation-dashboard" />
+<link rel="shortlink" href="/node/7670" />
+<link rel="shortcut icon" href="https://d2d.gsa.gov/sites/default/files/header-logo_0_0.png" type="image/png" />
+  <title>GSA OGP Business Travel and Relocation Dashboard | D2D</title>  <style type="text/css" media="all">
+@import url("https://d2d.gsa.gov/modules/system/system.base.css?qnca1i");
+@import url("https://d2d.gsa.gov/modules/system/system.menus.css?qnca1i");
+@import url("https://d2d.gsa.gov/modules/system/system.messages.css?qnca1i");
+@import url("https://d2d.gsa.gov/modules/system/system.theme.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/contrib/jquery_update/replace/ui/1.12.1/raw_version/themes/base/all.css?qnca1i");
+</style>
+<style type="text/css" media="all">
+@import url("https://d2d.gsa.gov/sites/all/modules/d2d_custom/dataset_ez/css/dataset_ez.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/date/date_api/date.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/date/date_popup/themes/datepicker.1.7.css?qnca1i");
+@import url("https://d2d.gsa.gov/modules/field/theme/field.css?qnca1i");
+@import url("https://d2d.gsa.gov/modules/node/node.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/contrib/om_maximenu/css/om_maximenu.css?qnca1i");
+@import url("https://d2d.gsa.gov/modules/search/search.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/d2d_custom/tableau_ez/css/tableau_ez.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/d2d_custom/tss_data/css/request_form.css?qnca1i");
+@import url("https://d2d.gsa.gov/modules/user/user.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/contrib/views/css/views.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/ckeditor/css/ckeditor.css?qnca1i");
+</style>
+<style type="text/css" media="all">
+@import url("https://d2d.gsa.gov/sites/all/modules/colorbox/styles/stockholmsyndrome/colorbox_style.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/ctools/css/ctools.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/contrib/rate/rate.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/contrib/rate/templates/fivestar/fivestar.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/d2d_custom/common/css/bootstrap-select.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/d2d_custom/common/css/common.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/libraries/chosen/chosen.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/modules/contrib/om_maximenu/skin/simple/simple.css?qnca1i");
+</style>
+<link type="text/css" rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" media="all" />
+<style type="text/css" media="all">
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/css/font-face-declarations.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/css/bootstrap.min.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/css/jquery.bxslider.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/css/select2.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/css/slick.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/css/slick-theme.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/style_jsafro.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/style.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/css/style-new.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/style_jsafro_override_style_new.css?qnca1i");
+@import url("https://d2d.gsa.gov/sites/all/themes/d2d/css/gray.min.css?qnca1i");
+</style>
+<link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&amp;qnca1i" media="all" />
+  <script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/contrib/jquery_update/replace/jquery/3.x/jquery.min.js?v=3.5.1"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.migrateMute=true;jQuery.migrateTrace=false;
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/contrib/jquery_update/replace/jquery-migrate/1/jquery-migrate.min.js?v=1"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/misc/jquery-extend-3.4.0.js?v=3.5.1"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/misc/jquery-html-prefilter-3.5.0-backport.js?v=3.5.1"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/misc/jquery.once.js?v=1.2"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/contrib/jquery_update/replace/ui/additional_plugins/ui/minified/jquery.ui.core.min.js?v=1.10.2"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/contrib/jquery_update/replace/ui/additional_plugins/ui/minified/jquery.ui.widget.min.js?v=1.10.2"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/misc/drupal.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/contrib/admin_menu/admin_devel/admin_devel.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/d2d_custom/common/js/report_link.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/contrib/om_maximenu/js/om_maximenu.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/d2d_custom/statistics_d2d/statistics_d2d.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/d2d_custom/tss_data/js/request_form.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/libraries/colorbox/jquery.colorbox-min.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/colorbox/js/colorbox.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/colorbox/styles/stockholmsyndrome/colorbox_style.js?qnca1i"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+var accesslog_d2d_aid = 19890210;
+//--><!]]>
+</script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+
+// Define paths for later use
+const PATH_D2D_AJAX_TSS_GET_FILTER_OPTIONS = '/ajax/tss-data/get-filter-options';
+const PATH_D2D_AJAX_TSS_REQUEST_FILE = '/ajax/tss-data/request-file';
+const PATH_D2D_AJAX_TSS_GET_QUERY_LIST = '/ajax/tss-get-query-list';
+const LABEL_TSS_COMBINED_DATASET = 'TSS Summarized Results';
+const LABEL_TSS_COMBINED_FLAT_DATASET = 'TSS Individual Results with Comments';
+  
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/contrib/rate/rate.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/contrib/rate/templates/fivestar/fivestar.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/d2d_custom/common/js/bootstrap-select.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/d2d_custom/common/js/common.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/libraries/chosen/chosen.jquery.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/modules/contrib/google_analytics/googleanalytics.js?qnca1i"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-71623384-1", {"cookieDomain":"auto"});ga("set", "anonymizeIp", true);console.log('Google Analytics');ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/themes/d2d/js/jquery.touchSwipe.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/themes/d2d/js/jquery.fullscreen-min.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/themes/d2d/js/jquery.bxslider.min.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/themes/d2d/js/slick.min.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/themes/d2d/js/select2.full.min.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/themes/d2d/js/jquery.gray.min.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/themes/d2d/custom.js?qnca1i"></script>
+<script type="text/javascript" src="https://d2d.gsa.gov/sites/all/themes/d2d/js/bxsliders_customizations.js?qnca1i"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"d2d","theme_token":"3FrAEbESs2ruwqqTRK-nIgXSHqEvE5got5AK1HKfvE8","js":{"sites\/all\/modules\/contrib\/jquery_update\/replace\/jquery\/3.x\/jquery.min.js":1,"0":1,"sites\/all\/modules\/contrib\/jquery_update\/replace\/jquery-migrate\/1\/jquery-migrate.min.js":1,"misc\/jquery-extend-3.4.0.js":1,"misc\/jquery-html-prefilter-3.5.0-backport.js":1,"misc\/jquery.once.js":1,"sites\/all\/modules\/contrib\/jquery_update\/replace\/ui\/additional_plugins\/ui\/minified\/jquery.ui.core.min.js":1,"sites\/all\/modules\/contrib\/jquery_update\/replace\/ui\/additional_plugins\/ui\/minified\/jquery.ui.widget.min.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/contrib\/admin_menu\/admin_devel\/admin_devel.js":1,"sites\/all\/modules\/d2d_custom\/common\/js\/report_link.js":1,"sites\/all\/modules\/contrib\/om_maximenu\/js\/om_maximenu.js":1,"sites\/all\/modules\/d2d_custom\/statistics_d2d\/statistics_d2d.js":1,"sites\/all\/modules\/d2d_custom\/tss_data\/js\/request_form.js":1,"sites\/all\/libraries\/colorbox\/jquery.colorbox-min.js":1,"sites\/all\/modules\/colorbox\/js\/colorbox.js":1,"sites\/all\/modules\/colorbox\/styles\/stockholmsyndrome\/colorbox_style.js":1,"1":1,"2":1,"sites\/all\/modules\/contrib\/rate\/rate.js":1,"sites\/all\/modules\/contrib\/rate\/templates\/fivestar\/fivestar.js":1,"sites\/all\/modules\/d2d_custom\/common\/js\/bootstrap-select.js":1,"sites\/all\/modules\/d2d_custom\/common\/js\/common.js":1,"sites\/all\/libraries\/chosen\/chosen.jquery.js":1,"sites\/all\/modules\/contrib\/google_analytics\/googleanalytics.js":1,"3":1,"https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/popper.js\/1.16.0\/umd\/popper.min.js":1,"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/4.4.1\/js\/bootstrap.min.js":1,"sites\/all\/themes\/d2d\/js\/jquery.touchSwipe.js":1,"sites\/all\/themes\/d2d\/js\/jquery.fullscreen-min.js":1,"sites\/all\/themes\/d2d\/js\/jquery.bxslider.min.js":1,"sites\/all\/themes\/d2d\/js\/slick.min.js":1,"sites\/all\/themes\/d2d\/js\/select2.full.min.js":1,"sites\/all\/themes\/d2d\/js\/jquery.gray.min.js":1,"sites\/all\/themes\/d2d\/custom.js":1,"sites\/all\/themes\/d2d\/js\/bxsliders_customizations.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"sites\/all\/modules\/d2d_custom\/dataset_ez\/css\/dataset_ez.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"sites\/all\/modules\/contrib\/om_maximenu\/css\/om_maximenu.css":1,"modules\/search\/search.css":1,"sites\/all\/modules\/d2d_custom\/tableau_ez\/css\/tableau_ez.css":1,"sites\/all\/modules\/d2d_custom\/tss_data\/css\/request_form.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/contrib\/views\/css\/views.css":1,"sites\/all\/modules\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/colorbox\/styles\/stockholmsyndrome\/colorbox_style.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/contrib\/rate\/rate.css":1,"sites\/all\/modules\/contrib\/rate\/templates\/fivestar\/fivestar.css":1,"sites\/all\/modules\/d2d_custom\/common\/css\/bootstrap-select.css":1,"sites\/all\/modules\/d2d_custom\/common\/css\/common.css":1,"sites\/all\/libraries\/chosen\/chosen.css":1,"sites\/all\/modules\/contrib\/om_maximenu\/skin\/simple\/simple.css":1,"https:\/\/pro.fontawesome.com\/releases\/v5.10.0\/css\/all.css":1,"sites\/all\/themes\/d2d\/css\/font-face-declarations.css":1,"sites\/all\/themes\/d2d\/css\/bootstrap.min.css":1,"sites\/all\/themes\/d2d\/css\/jquery.bxslider.css":1,"sites\/all\/themes\/d2d\/css\/select2.css":1,"sites\/all\/themes\/d2d\/css\/slick.css":1,"sites\/all\/themes\/d2d\/css\/slick-theme.css":1,"sites\/all\/themes\/d2d\/style_jsafro.css":1,"sites\/all\/themes\/d2d\/style.css":1,"sites\/all\/themes\/d2d\/css\/style-new.css":1,"sites\/all\/themes\/d2d\/style_jsafro_override_style_new.css":1,"sites\/all\/themes\/d2d\/css\/gray.min.css":1,"\/\/fonts.googleapis.com\/css?family=Poppins:300,400,500,600,700":1}},"colorbox":{"opacity":"0.85","current":"{current} of {total}","previous":"\u00ab Prev","next":"Next \u00bb","close":"Close","maxWidth":"98%","maxHeight":"98%","fixed":true,"mobiledetect":true,"mobiledevicewidth":"480px"},"jcarousel":{"ajaxPath":"\/jcarousel\/ajax\/views"},"rate":{"basePath":"\/rate\/vote\/js","destination":"node\/7670"},"urlIsAjaxTrusted":{"\/report\/gsa-ogp-business-travel-and-relocation-dashboard":true},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip","trackColorbox":1},"ogContext":{"groupType":"node","gid":"7661"}});
+//--><!]]>
+</script>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900,100' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <meta http-equiv=“Pragma” content=”no-cache”>
+  <meta http-equiv=“Expires” content=”-1″>
+  <meta http-equiv=“CACHE-CONTROL” content=”NO-CACHE”>
+</head>
+<body class="html not-front not-logged-in no-sidebars page-node page-node- page-node-7670 node-type-report og-context og-context-node og-context-node-7661" >
+  <a name="page-top"></a>
+  <div id="skip-link">
+    <a href="#main" class="element-invisible element-focusable">Skip to main content</a>
+  </div>
+    <!-- BEGIN USA Banner -->
+<section class="usa-banner">
+  <div class="usa-accordion">
+    <header class="usa-banner-header">
+      <div class="usa-grid usa-banner-inner">
+        <div class="cell">
+          <img id="usa-banner-flag" src="/sites/all/themes/d2d/images/usa_flag.png" alt="U.S. flag">
+        </div>
+        <div class="cell">
+          <p class="header-text">An official website of the United States government</p>
+        </div>
+        <div class="cell">
+          <button class="usa-accordion-button usa-banner-button accordion-state-closed" aria-expanded="false" aria-controls="gov-banner" onClick="toggle_usa_banner();">
+              <span class="usa-banner-button-text">
+                <span class="text-container">Here's how you know</span>
+              </span>
+          </button>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </header>
+    <div class="usa-banner-content usa-grid usa-accordion-content" id="gov-banner" aria-hidden="true" aria-expanded="false" style="display: none;">
+      <div class="accordion-content-container">
+        <div class="usa-banner-guidance-gov usa-width-one-half cell">
+          <div class="image-container cell">
+            <img class="usa-banner-icon usa-media_block-img" src="/sites/all/themes/d2d/images/icons/usa_banner_header/icon-dot-gov.svg" alt="Dot gov">
+          </div>
+          <div class="text-container cell">
+            <div class="usa-media_block-body">
+              <p>
+                <strong>Official websites use .gov</strong>
+                <br>A <strong>.gov</strong> website belongs to an official government organization in the United States.
+              </p>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="usa-banner-guidance-ssl usa-width-one-half cell">
+          <div class="image-container cell">
+            <img class="usa-banner-icon usa-media_block-img" src="/sites/all/themes/d2d/images/icons/usa_banner_header/icon-https.svg" alt="Https">
+          </div>
+          <div class="text-container cell">
+            <div class="usa-media_block-body">
+              <p>
+                <strong>Secure .gov websites use HTTPS</strong>
+                <br>A <strong>lock</strong> (<span class="icon-lock">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="12" viewBox="0 0 52 64" class="usa-banner__lock-image" role="img" aria-labelledby="banner-lock-title banner-lock-description">
+                                 <title id="banner-lock-title">Lock</title>
+                                 <desc id="banner-lock-description">A locked padlock</desc>
+                                 <path fill="#000000" fill-rule="evenodd" d="M26 0c10.493 0 19 8.507 19 19v9h3a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V32a4 4 0 0 1 4-4h3v-9C7 8.507 15.507 0 26 0zm0 8c-5.979 0-10.843 4.77-10.996 10.712L15 19v9h22v-9c0-6.075-4.925-11-11-11z"></path>
+                              </svg>
+                           </span>) or <strong>https://</strong> means you've safely connected to the .gov website. Share sensative information only on official, secure websites.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function toggle_usa_banner() {
+    var usa_banner_state = jQuery('section.usa-banner .usa-banner-content').attr('aria-expanded');
+
+    if( usa_banner_state == 'false' ) {
+      // Update state
+      jQuery('section.usa-banner .usa-banner-content').attr('aria-expanded', 'true');
+
+      // Show
+      jQuery('section.usa-banner .usa-banner-content').css('display', 'block');
+
+      // Update arrow
+      jQuery('section.usa-banner header.usa-banner-header button.usa-accordion-button').removeClass('accordion-state-closed');
+      jQuery('section.usa-banner header.usa-banner-header button.usa-accordion-button').addClass('accordion-state-open');
+    } else {
+      // Update state
+      jQuery('section.usa-banner .usa-banner-content').attr('aria-expanded', 'false');
+
+      // Show
+      jQuery('section.usa-banner .usa-banner-content').css('display', 'none');
+
+      // Update arrow
+      jQuery('section.usa-banner header.usa-banner-header button.usa-accordion-button').removeClass('accordion-state-open');
+      jQuery('section.usa-banner header.usa-banner-header button.usa-accordion-button').addClass('accordion-state-closed');
+    }
+
+  }
+
+  // toggle_usa_banner();
+</script>
+<!-- END USA Banner -->
+
+<div id="page-wrapper">
+  <div id="page">
+
+    <div id="header">
+      <div class="section clearfix">
+
+                  <div class="region region-header">
+    <div id="block-block-5" class="block block-block">
+
+    
+  <div class="content">
+    <a href="/">
+  <img id="header-logo" alt="GSA and D2D logos" src="/sites/all/themes/d2d/images/GSA_D2D_logo_new3.png" />
+</a>
+<span class="title">DATA to DECISIONS</span>  </div>
+</div>
+<div id="block-common-common-d2d-keyword-search" class="block block-common">
+
+    
+  <div class="content">
+    <form action="/report/gsa-ogp-business-travel-and-relocation-dashboard" method="post" id="common-d2d-search-keyword-form" accept-charset="UTF-8"><div><input id="content-type-for-keyword-hidden" type="hidden" name="content_type_for_keyword" value="all" />
+
+<div class="input-group pl-5 d2d-search d2d-keyword-search">
+  <div class="input-group-prepend">
+    <select id="content-type-for-keyword-select" class="selectpicker" data-style="btn-outline">
+      <option data-icon="fa fas-blank" data-subtext="Types" value="All">All</option>
+      <option data-icon="fa fa-bar-chart" data-subtext="Report (Dasboard)" value="Report (Dashboard)" selected></option>
+      <option data-icon="fa fa-handshake-o" data-subtext="Customer" value="Customer"></option>
+      <option data-icon="fa fa-database" data-subtext="Dataset" value="Dataset"></option>
+      <option data-icon="fa fa-file-word-o" data-subtext="Document" value="Document"></option>
+      <option data-icon="fa fa-newspaper-o" data-subtext="Article" value="Article"></option>
+    </select>
+  </div>
+
+<!--  <input id="search_input" type="text" class="form-control" placeholder="Search for Report (Dashboard)">-->
+  <div class="form-item form-type-textfield form-item-keywords">
+  <label for="edit-keywords">Keywords </label>
+ <input placeholder="Keywords" type="text" id="edit-keywords" name="keywords" value="" size="60" maxlength="128" class="form-text" />
+</div>
+  <div class="input-group-append">
+<!--    <button class="btn" type="submit"><i class="fa fa-search"></i></button>-->
+    <div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-keyword-search" name="op" value="Search" class="form-submit" /></div>  </div>
+</div>
+
+<input type="hidden" name="form_build_id" value="form-0bufKibca_C5KbmLK41Tq0Ydg7IRww-IQVS_1KgvuoQ" />
+<input type="hidden" name="form_id" value="common_d2d_search_keyword_form" />
+</div><input type="hidden" name="as_sfid" value="AAAAAAVi0orW7rohTquvhhDujLiGhnWQ-O65-EI502m0PsB9ElGiwrh5wWj53Xq38bbgGAP2VESnxNDuf3Ziu7-scVKmj9snPyKmD1epuV7KVBWrnu2o5ijVQA9ZVTQBxlknotc=" /><input type="hidden" name="as_fid" value="6999ee5ecd1aaf98dcaec9cfb476eb42cb827cf3" /></form>  </div>
+</div>
+
+
+<div id="block-common-common-d2d-user-menu" class="block block-common ml-3">
+
+
+  
+    <div class="content logged-out">
+      <a href="https://login.max.gov/cas/login?service=https%3A//d2d.gsa.gov/cas&amp;securityLevel=securePlus2&amp;renew=true">Login</a>    </div>
+
+    <a id="question-mark" class="ml-3" href="/content/how-access-d2d-portal"><i class="fa fa-question"></i></a>
+
+  
+</div>
+  </div>
+
+      </div>
+      <div class="mainmenu-bar">
+        <div class="section">
+            <div class="region region-mainmenu">
+    <div id="block-om-maximenu-om-maximenu-1" class="block block-om-maximenu">
+
+    
+  <div class="content">
+     
+
+  <div id="om-maximenu-mega-menu---main-nav" class="om-maximenu om-maximenu-simple om-maximenu-block om-maximenu-row om-maximenu-block-down code-om-u162681-985563671">     
+            
+
+<div id="om-menu-mega-menu---main-nav-ul-wrapper" class="om-menu-ul-wrapper">
+  <ul id="om-menu-mega-menu---main-nav" class="om-menu">
+                  
+
+   
+  <li id="om-leaf-om-u162681-985563671-1" class="om-leaf first leaf-about">   
+    <span class="om-link  link-about" >About</span>      
+  <div class="om-maximenu-content om-maximenu-content-nofade closed">
+    <div class="om-maximenu-top">
+      <div class="om-maximenu-top-left"></div>
+      <div class="om-maximenu-top-right"></div>
+    </div><!-- /.om-maximenu-top --> 
+    <div class="om-maximenu-middle">
+      <div class="om-maximenu-middle-left">
+        <div class="om-maximenu-middle-right">
+           
+
+<div class="block block-menu_block block-menu_block-id-2 first last">           
+  <h3 class="title"></h3>    <div class="content"><div class="menu-block-wrapper menu-block-2 menu-name-main-menu parent-mlid-3311191 menu-level-1">
+  <ul class="menu"><li class="first leaf menu-mlid-109874601"><a href="/customer-team/d2d-team">D2D Team</a></li>
+<li class="last leaf menu-mlid-3325261"><a href="/content/how-it-works">How It Works</a></li>
+</ul></div>
+</div>
+  </div><!-- /.block -->
+
+
+
+
+
+          <div class="om-clearfix"></div>
+        </div><!-- /.om-maximenu-middle-right --> 
+      </div><!-- /.om-maximenu-middle-left --> 
+    </div><!-- /.om-maximenu-middle --> 
+    <div class="om-maximenu-bottom">
+      <div class="om-maximenu-bottom-left"></div>
+      <div class="om-maximenu-bottom-right"></div>
+    </div><!-- /.om-maximenu-bottom -->  
+    <div class="om-maximenu-arrow"></div>
+    <div class="om-maximenu-open">
+      <input type="checkbox" value="" />
+      Stay    </div><!-- /.om-maximenu-open -->  
+  </div><!-- /.om-maximenu-content -->  
+ 
+
+      
+  </li>
+  
+    
+  
+
+  
+          
+                  
+
+   
+  <li id="om-leaf-om-u162681-985563671-2" class="om-leaf leaf-customers">   
+    <a  class="om-link  link-customers" href="https://d2d.gsa.gov/d2d-simplified-search?content_type_simplified[]=customer&layout=list_view">Customers</a>      
+  <div class="om-maximenu-content om-maximenu-content-nofade closed">
+    <div class="om-maximenu-top">
+      <div class="om-maximenu-top-left"></div>
+      <div class="om-maximenu-top-right"></div>
+    </div><!-- /.om-maximenu-top --> 
+    <div class="om-maximenu-middle">
+      <div class="om-maximenu-middle-left">
+        <div class="om-maximenu-middle-right">
+           
+
+<div class="block block-menu_block block-menu_block-id-3 first last">           
+  <h3 class="title"></h3>    <div class="content"><div class="menu-block-wrapper menu-block-3 menu-name-main-menu parent-mlid-867 menu-level-1">
+  <ul class="menu"><li class="first last expanded menu-mlid-109872957"><a href="/customer/general-services-administration-0">General Services Administration</a><ul class="menu"><li class="first expanded menu-mlid-109872960"><a href="/customer/gsa-federal-acquisition-service">Federal Acquisition Service</a><ul class="menu"><li class="first leaf menu-mlid-109875134"><a href="/customer/fas-office-assisted-acquisition-services-qf" title="FAS Office of Assisted Acquisition Services">FAS Office of Assisted Acquisition Services (QF)</a></li>
+<li class="leaf menu-mlid-109874271"><a href="/customer/fas-city-pair-program-cpp" title="FAS City Pair Program">FAS City Pair Program</a></li>
+<li class="last leaf menu-mlid-109876432"><a href="/customer/fas-government-wide-category-management">FAS Government Wide Category Management</a></li>
+</ul></li>
+<li class="expanded menu-mlid-109872965"><a href="/customer/public-buildings-service-pbs" title="Public Buildings Service">Public Buildings Service</a><ul class="menu"><li class="first leaf menu-mlid-109874281"><a href="/customer/pbs-office-design-and-construction-pc" title="PBS Office of Design and Construction (PC)">PBS Office of Design and Construction (PC)</a></li>
+<li class="leaf menu-mlid-109876433"><a href="/customer/pbs-office-facilities-management-pm">PBS Office of Facilities Management (PM)</a></li>
+<li class="leaf menu-mlid-109875472"><a href="/customer/pbs-office-leasing-pr" title="PBS Office of Leasing (PR)">PBS Office of Leasing (PR)</a></li>
+<li class="leaf menu-mlid-109875473"><a href="/customer/pbs-office-portfolio-management-and-customer-engagement-pt" title="PBS Office of Portfolio Management &amp; Customer Engagement (PT)">PBS Office of Portfolio Management &amp; Customer Engagement (PT)</a></li>
+<li class="last leaf menu-mlid-109875471"><a href="/customer/pbs-office-real-property-utilization-and-disposal-pi" title="PBS Office of Real Property Utilization and Disposal (PI)">PBS Office of Real Property Utilization and Disposal (PI)</a></li>
+</ul></li>
+<li class="leaf menu-mlid-109874041"><a href="/customer/technology-transformation-service">Technology Transformation Service</a></li>
+<li class="expanded menu-mlid-109872963"><a href="/customer/office-governmentwide-policy-ogp">Office of Government-wide Policy</a><ul class="menu"><li class="first leaf menu-mlid-109876280"><a href="/customer/ogp-office-acquisition-policy-mv">OGP Office of Acquisition Policy (MV)</a></li>
+<li class="last leaf menu-mlid-109876281"><a href="/customer/ogp-office-shared-services-and-performance-improvement-my">OGP Office of Shared Services and Performance Improvement (MY)</a></li>
+</ul></li>
+<li class="leaf menu-mlid-109872961"><a href="/customer/office-gsa-information-technology-gsa-it" title="GSA Information Technology Services">GSA IT</a></li>
+<li class="leaf menu-mlid-109872962"><a href="/customer/office-chief-financial-officer-ocfo">Office of the Chief Financial Officer</a></li>
+<li class="leaf menu-mlid-109874051"><a href="/customer/office-administrative-services" title="">Office of Administrative Services</a></li>
+<li class="leaf menu-mlid-109872964"><a href="/customer/gsa-office-human-resources-management-ohrm">Office of Human Resources Management</a></li>
+<li class="last leaf menu-mlid-109874411"><a href="/customer/office-customer-experience-oce">Office of Customer Experience</a></li>
+</ul></li>
+</ul></div>
+</div>
+  </div><!-- /.block -->
+
+
+
+
+
+          <div class="om-clearfix"></div>
+        </div><!-- /.om-maximenu-middle-right --> 
+      </div><!-- /.om-maximenu-middle-left --> 
+    </div><!-- /.om-maximenu-middle --> 
+    <div class="om-maximenu-bottom">
+      <div class="om-maximenu-bottom-left"></div>
+      <div class="om-maximenu-bottom-right"></div>
+    </div><!-- /.om-maximenu-bottom -->  
+    <div class="om-maximenu-arrow"></div>
+    <div class="om-maximenu-open">
+      <input type="checkbox" value="" />
+      Stay    </div><!-- /.om-maximenu-open -->  
+  </div><!-- /.om-maximenu-content -->  
+ 
+
+      
+  </li>
+  
+    
+  
+
+  
+          
+                  
+
+  
+    
+  
+
+  
+          
+                  
+
+  
+    
+  
+
+  
+          
+      </ul><!-- /.om-menu -->    
+</div><!-- /.om-menu-ul-wrapper -->   
+
+
+
+      </div><!-- /#om-maximenu-[menu name] -->   
+
+
+  </div>
+</div>
+  </div>
+        </div>
+      </div>
+    </div> <!-- /.section, /#header -->
+
+        <div id="breadcrumb">
+      <div class="section"><div class="breadcrumbs-holder"><ul class="breadcrumbs"><li><a href="/">Home</a></li><li>GSA OGP Business Travel and Relocation Dashboard</li></ul></div></div>
+    </div>
+    
+    
+
+    <div id="main-wrapper">
+      <div id="main" class="clearfix">
+
+        <div class="section">
+
+          <h1 class="title" id="page-title">GSA OGP Business Travel and Relocation Dashboard</h1>
+                      <div class="tabs"></div>
+          
+          <div id="prehero">
+            <div class="section">
+                          </div>
+          </div>
+
+          <div id="hero">
+            <div class="section">
+                          </div>
+          </div>
+
+          <div id="content" class="column">
+            <a id="main-content"></a>
+
+            
+              <div class="region region-content">
+    <div id="block-system-main" class="block block-system">
+
+    
+  <div class="content">
+    <div id="node-7670" class="node node-report clearfix" about="/report/gsa-ogp-business-travel-and-relocation-dashboard" typeof="sioc:Item foaf:Document">
+
+      <span property="dc:title" content="GSA OGP Business Travel and Relocation Dashboard" class="rdf-meta element-hidden"></span>
+  <div class="content">
+      </div>
+
+</div>
+  </div>
+</div>
+<div id="block-blocks-rlp-rlp-rate" class="block block-blocks-rlp modular-block">
+
+    
+  <div class="content">
+    <!-- Ratings widget is hidden. Edit the node and select it for display. -->  </div>
+</div>
+<div id="block-blocks-rlp-rlp-report-link-carousel" class="block block-blocks-rlp modular-block modular-block-report-links modular-block-report-links-carousel">
+
+    
+  <div class="content">
+    <ul class="bxSlider"><li><div id="node-7669" class="node node-report-link display-mode-report-link-w-image clearfix" about="/report-link/business-travel-and-relocation-data" typeof="sioc:Item foaf:Document">
+
+
+  <div class="content node-report-link-content" data-reporting-tool="tableau" data-nid="7669" data-display-in="default">
+          <div><!--
+This file is not used by Drupal core, which uses theme functions instead.
+See http://api.drupal.org/api/function/theme_field/7 for details.
+After copying this file to your theme's folder and customizing it, remove this
+HTML comment.
+-->
+<div class="field field-name-field-single-image field-type-image field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even"><img typeof="foaf:Image" src="https://d2d.gsa.gov/sites/default/files/styles/report_link/public/media/OGP%20TRIP_RELO_0.png?itok=JSQ7oaeM" width="102" height="102" alt="OGP TRIP_RELO.png" title="OGP TRIP_RELO.png" /></div>
+      </div>
+</div>
+</div>
+      <h3>Business Travel and Relocation Data</h3>
+      </div>
+
+
+
+</div>
+</li></ul><div class="embedded-iframe-container"></div>  </div>
+</div>
+<div id="block-blocks-rlp-rlp-about" class="block block-blocks-rlp modular-block modular-block-with-rcc modular-block-about">
+
+    <h2>About This Report</h2>
+  
+  <div class="content">
+    <div class="about-block rcc">
+<div id="node-7670" class="node node-report clearfix" about="/report/gsa-ogp-business-travel-and-relocation-dashboard" typeof="sioc:Item foaf:Document">
+  <div class="content">
+
+    <div class="cell image-container">
+    </div>
+
+    <div class="cell text-container">
+<!--
+This file is not used by Drupal core, which uses theme functions instead.
+See http://api.drupal.org/api/function/theme_field/7 for details.
+After copying this file to your theme's folder and customizing it, remove this
+HTML comment.
+-->
+<div class="field field-name-body field-type-text-with-summary field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even" property="content:encoded"><p>The Modernizing Government Travel Act became law, Public Law 115-34, and updated 5 U.S.C. § 5707 on May 16, 2017. The statute requires that not later than November 30 of each year, the head of each agency shall submit to the Administrator of General Services, in a format prescribed by the Administrator and approved by the Director of the Office of Management and Budget, (A) data on total agency payments for such items as travel and transportation of people, average costs and durations of trips, and purposes of official travel; (B) data on estimated total agency payments for employee relocation; and (C) an analysis of the total costs of transportation service by type, and the total number of trips utilizing each transportation type for purposes of official travel. Per the Modernizing Government Travel Act requirements, GSA is submitting the results of the required analysis and public display of agency data. The following can be found within the dashboards:</p>
+<p>● Travel data and analysis for both Government-wide and the U.S.C. § 901(b) agencies (also known as the Chief Financial Officers Act (CFO Act) agencies);</p>
+<p>● Relocation data and analysis for both Government-wide and the U.S.C. § 901(b) agencies (also known as the CFO Act agencies);</p>
+<p>● Data elements and data summarized Government-wide as well as individual agency-submitted data; and</p>
+<p>● A list of agencies that submitted data</p>
+<p>Last updated: February 7, 2020</p>
+</div>
+      </div>
+</div>
+
+
+    </div>
+
+    <div class="clear"></div>
+  </div>
+</div></div>  </div>
+</div>
+<div id="block-blocks-rlp-rlp-contact" class="block block-blocks-rlp modular-block modular-block-with-rcc modular-block-contact">
+
+    <h2>Contact</h2>
+  
+  <div class="content">
+    <div class="contact-block rcc"><div id="node-7965" class="node node-contact display-mode-contact_modular_block clearfix rcc" about="/contact/travel-policy" typeof="sioc:Item foaf:Document">
+  <div class="content">
+
+    <div class="cell image-container"></div>
+    <div class="cell meta">
+      <div class="name-and-title-container">
+                <div class="name">Travel Policy</div>
+        <span property="dc:title" content="Travel Policy" class="rdf-meta element-hidden"></span>              </div>
+      <div class="contact-info-container">
+                <!--
+This file is not used by Drupal core, which uses theme functions instead.
+See http://api.drupal.org/api/function/theme_field/7 for details.
+After copying this file to your theme's folder and customizing it, remove this
+HTML comment.
+-->
+<div class="field field-name-field-email field-type-email field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even"><a href="mailto:travelpolicy@gsa.gov.">travelpolicy@gsa.gov.</a></div>
+      </div>
+</div>
+      </div>
+    </div>
+    <div class="clear"></div>      
+
+  </div>
+</div>
+</div>  </div>
+</div>
+  </div>
+          </div>
+          <!-- /.section, /#content -->
+
+        <div id="right" class="column sidebar">
+          <div class="section">
+                      </div>
+        </div>
+        <!-- /.section, /#sidebar-first -->
+      </div>
+    </div>
+  </div>
+  <!-- /#main, /#main-wrapper -->
+
+  <div id="footerwrap">
+    <div id="icons">
+      <div class="section">
+          <div class="region region-icons">
+    <div id="block-views-homepage-icons-block" class="block block-views">
+
+    
+  <div class="content">
+    <div class="view view-homepage-icons view-id-homepage_icons view-display-id-block view-dom-id-fc5c4edc595281c853f63e449dc1bfcd">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first icon-box">
+      
+  <div class="views-field views-field-field-icon-image">        <div class="field-content"><a href="/content/about-d2d"><img typeof="foaf:Image" src="https://d2d.gsa.gov/sites/default/files/styles/homepage_icon/public/icon1.png?itok=ODD6AXzU" width="55" height="55" alt="" /></a></div>  </div>  
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/content/about-d2d">About D2D</a></span>  </div>  
+  <div class="views-field views-field-body">        <div class="field-content"><p><a href="/content/about-d2d">Learn more about<br />
+the platform</a></p>
+</div>  </div>  </div>
+  <div class="views-row views-row-2 views-row-even icon-box">
+      
+  <div class="views-field views-field-field-icon-image">        <div class="field-content"><a href="/content/datasets"><img typeof="foaf:Image" src="https://d2d.gsa.gov/sites/default/files/styles/homepage_icon/public/icon3.png?itok=F6j55P_Y" width="51" height="55" alt="" /></a></div>  </div>  
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/content/datasets">Datasets</a></span>  </div>  
+  <div class="views-field views-field-body">        <div class="field-content"><p><a href="/content/datasets">Explore available<br />
+datasets</a></p>
+</div>  </div>  </div>
+  <div class="views-row views-row-3 views-row-odd views-row-last icon-box">
+      
+  <div class="views-field views-field-field-icon-image">        <div class="field-content"><a href="/content/reports"><img typeof="foaf:Image" src="https://d2d.gsa.gov/sites/default/files/styles/homepage_icon/public/icon4.png?itok=ZkeZCGpx" width="56" height="55" alt="" /></a></div>  </div>  
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/content/reports">Reports</a></span>  </div>  
+  <div class="views-field views-field-body">        <div class="field-content"><p><a href="/homepage-icon/reports">Explore available<br />
+reports</a></p>
+</div>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+</div>
+  </div>
+      </div>
+    </div>
+
+    <div id="footer">
+  <!--      <div class="section">-->
+    <div class="region region-footer">
+    <div id="block-common-common-d2d-footer-default" class="block block-common">
+
+  <footer class="usa-footer">
+    <div class="usa-footer__primary-section section">
+      <nav class="usa-footer__nav" aria-label="Footer navigation">
+        <!-- div class="text-center text-bold padding-top-3 footer-copyright">&copy; 2019-2020 GSA OCIO-D2D. All rights reserved.</div -->
+        <div class="text-center padding-3 footer-disclaimer">Employees with disabilities or impairments and who use assistive technology such as screen readers or magnification software are encouraged to contact <a href="mailto:AskD2D@gsa.gov">AskD2D@gsa.gov</a> for help with this page.</div>
+      </nav>
+    </div>
+  </footer>
+  <div class="usa-identifier">
+    <section
+      class="usa-identifier__section usa-identifier__section--masthead section"
+      aria-label="Agency identifier">
+      <div class="usa-identifier__container">
+        <div class="usa-identifier__logos wrapper-logo">
+          <a href="https://www.gsa.gov/" class="usa-identifier__logo">
+            <img
+              class="usa-identifier__logo-img"
+              src="/sites/all/themes/d2d/images/gsa-logo.svg"
+              alt="GSA logo"
+              role="img">
+          </a>
+        </div>
+        <div class="usa-identifier__identity wrapper-description" aria-label="Agency description">
+          <span class="display-inline-block">
+            <p class="usa-identifier__identity-domain">d2d.gsa.gov</p>
+            <p class="usa-identifier__identity-disclaimer">An official website of the <a href="https://www.gsa.gov/">General Services Administration</a></p>
+          </span>
+        </div>
+        <div class="usa-identifier__identity-jump-link float-right position-relative top-105 wrapper-jump-link">
+            <i class="fa fa-arrow-circle-up fa-2x margin-right-1"></i>
+            <a href="#skip-link" class="text-no-underline position-relative bottom-1">Return to top</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="js/uswds.min.js"></script>
+
+</div>
+  </div>
+  <!--      </div>-->
+</div>
+<!-- /.section, /#footer -->
+
+  </div>
+</div>
+</div> <!-- /#page, /#page-wrapper -->
+  </body>
+</html>
