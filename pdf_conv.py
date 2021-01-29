@@ -15,3 +15,6 @@ ax.axis('tight')
 ax.table(cellText=total_2019.values, colLabels=total_2019.columns, loc='center')
 fig.tight_layout()
 plt.show()
+
+# make api call to us gov gsa regulations api
+response = requests.get('https://api.regulations.gov/v4/comments?filter[searchTerm]=travel&api_key=DEMO_KEY')
