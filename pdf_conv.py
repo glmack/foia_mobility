@@ -20,6 +20,16 @@ fig.tight_layout()
 plt.show()
 
 # make call to us gov gsa regulations api
-# response = requests.get('https://api.regulations.gov/v4/comments?filter[searchTerm]=travel&api_key=DEMO_KEY',
+# 'https://api.regulations.gov/v4/documents?3&api_key=DEMO_KEY',
+# response = requests.get(https://api.regulations.gov/v4/documents,
 # params={'filter[searchTerm]': '115–34'},
 # )
+def get regulation:
+    response = requests.get(
+
+
+def get datgov_metadata:
+    response = requests.get(http://catalog.data.gov/api/3/',
+    params={'filter[searchTerm]': '115-34',
+            'api_key'=os.environ['DATAGOV_API_KEY']}
+    )
