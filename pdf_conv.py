@@ -29,7 +29,10 @@ def get regulation:
 
 
 def get datgov_metadata:
-    response = requests.get(http://catalog.data.gov/api/3/',
+    response = requests.get('http://catalog.data.gov/api/3/',
     params={'filter[searchTerm]': '115-34',
-            'api_key'=os.environ['DATAGOV_API_KEY']}
+            'api_key': os.environ['DATAGOV_API_KEY']
+           }
     )
+    data = response.content
+    return data
