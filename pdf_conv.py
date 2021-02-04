@@ -24,15 +24,15 @@ plt.show()
 # response = requests.get(https://api.regulations.gov/v4/documents,
 # params={'filter[searchTerm]': '115–34'},
 # )
+
 def get regulation:
     response = requests.get(
 
 
-def get datgov_metadata:
-    response = requests.get('http://catalog.data.gov/api/3/',
-    params={'filter[searchTerm]': '115-34',
-            'api_key': os.environ['DATAGOV_API_KEY']
-           }
-    )
-    data = response.content
-    return data
+def get datgov_metadata():
+    import requests
+    payload = {'id': 'concur-travel-parent', 'api_key': os.environ['DATAGOV_API_KEY']}
+    response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/package_show',
+                            params=payload
+                            )
+    return response.json()
