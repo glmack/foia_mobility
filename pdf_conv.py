@@ -36,6 +36,18 @@ def get_datagov_meta():
     data = response.json()
     return data
 
+# Document Status               https://catalog.data.gov/dataset/document-status
+# E2                            https://catalog.data.gov/dataset/e2
+# Group Update                  https://catalog.data.gov/dataset/group-update
+# User Profile                  https://catalog.data.gov/dataset/user-profile
+# E-Gov Travel (ETS) Measures   https://catalog.data.gov/dataset/e-gov-travel-ets-measures
+# Master Data                   https://catalog.data.gov/dataset/master-data-b4599
+# End to End Travel             https://catalog.data.gov/dataset/end-to-end-travel
+# Travel Manager - Production   https://catalog.data.gov/dataset/travel-manager-production
+
+
+
+
 
 def get_regulation():
     """Make call to us gov gsa regulations api"""
