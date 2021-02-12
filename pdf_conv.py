@@ -47,8 +47,6 @@ def get_datagov_meta():
 
 
 
-
-
 def get_regulation():
     """Make call to us gov gsa regulations api"""
     payload = {'filter[searchTerm]': '115–34',
@@ -59,6 +57,11 @@ def get_regulation():
         )
     data = response.json()
     return data
+
+def get_foia_libraries():
+    import requests
+    response = requests.get('https://works.bepress.com/lisa_deluca/40/download/')
+    pd.read_excel()
 
 
 # ----------
