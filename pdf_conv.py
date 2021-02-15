@@ -63,6 +63,8 @@ def get_foia_libraries():
     response = requests.get('https://works.bepress.com/lisa_deluca/40/download/')
     pd.read_excel()
 
+# DOL-wide FOIA reading room
+# https://www.dol.gov/general/foia/readroom
 
 # ----------
 
