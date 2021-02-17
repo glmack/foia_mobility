@@ -58,13 +58,24 @@ def get_regulation():
     data = response.json()
     return data
 
-def get_foia_libraries():
+def get_deluca_foia_libraries():
+    """Get list of foia libraries from DeLuca journal article"""
     import requests
     response = requests.get('https://works.bepress.com/lisa_deluca/40/download/')
     pd.read_excel()
 
+
 # DOL-wide FOIA reading room
 # https://www.dol.gov/general/foia/readroom
+
+
+def get_foiaonline_travel():
+    import requests
+    payload = {'query': 'travel'}
+    response = requests.get('https://foiaonline.gov/foiaonline/action/public/search/quickSearch')
+    data = response.json()
+    return data
+
 
 # ----------
 
