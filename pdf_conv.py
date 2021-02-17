@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
+def get_datagov_meta():
+    pass
+
 def get_trip_report():
     """Get 2/2020 trip report from d2d dashboard"""
     filepath = '/Users/lee/Documents/code/foia_mobility/TRip_Relocation.pdf'
@@ -24,7 +27,7 @@ def vis_trip_report():
     plt.show()
 
 
-def get_datagov_meta():
+def get_concur_travel_parent_meta():
     """Request metadata on US gov datasets from data.gov"""
     import requests
     payload = {'id': 'concur-travel-parent',
@@ -46,6 +49,24 @@ def get_datagov_meta():
 # Travel Manager - Production   https://catalog.data.gov/dataset/travel-manager-production
 
 
+def get_foiaonline_travel():
+    import requests
+    payload = {'query': 'travel'}
+    response = requests.get('https://foiaonline.gov/foiaonline/action/public/search/quickSearch')
+    data = response.json()
+    return data
+
+
+def get_foia_library_list():
+    """Get list of foia libraries from DeLuca journal article"""
+    import requests
+    response = requests.get('https://works.bepress.com/lisa_deluca/40/download/')
+    pd.read_excel()
+
+
+# DOL-wide FOIA reading room
+# https://www.dol.gov/general/foia/readroom
+
 
 def get_regulation():
     """Make call to us gov gsa regulations api"""
@@ -58,25 +79,7 @@ def get_regulation():
     data = response.json()
     return data
 
-def get_deluca_foia_libraries():
-    """Get list of foia libraries from DeLuca journal article"""
-    import requests
-    response = requests.get('https://works.bepress.com/lisa_deluca/40/download/')
-    pd.read_excel()
-
-
-# DOL-wide FOIA reading room
-# https://www.dol.gov/general/foia/readroom
-
-
-def get_foiaonline_travel():
-    import requests
-    payload = {'query': 'travel'}
-    response = requests.get('https://foiaonline.gov/foiaonline/action/public/search/quickSearch')
-    data = response.json()
-    return data
-
 
 # ----------
 
-concur_travel_parent_meta = get_datagov_meta()
+concur_travel_parent_meta = get_concur_travel_parent_meta()
