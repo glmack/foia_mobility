@@ -8,23 +8,37 @@ def get_datagov_meta(search_term):
     """Query data.gov for metadata on us gov data sets"""
     import requests
     import os
-    payload = {'q': search_term,
+    params = {'q': search_term,
+              'organization_type'= 'Federal+Government',
                'api_key': os.environ['DATAGOV_API_KEY']}
     response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/package_search',
-        params=payload
+        params=params
         )
     data = response.json()
     return data
 
 
+def datagov_to_pd():
+    """Read datagov api query responses into pandas and pre-process"""
+    pass
+    # data['result']['results'][0]
+
+
+def scan_travel_sorns():
+    """Get system of records notices (SORNs) for travel datasets in usgov agencies"""
+    pass
+
+# https://home.treasury.gov/footer/privacy-act/system-of-records-notices-sorns
+# https://www.dhs.gov/system-records-notices-sorns
+
 def get_concur_travel_parent_meta():
     """Request metadata on US gov datasets from data.gov"""
     import requests
-    payload = {'id': 'concur-travel-parent',
+    params = {'id': 'concur-travel-parent',
                'api_key': os.environ['DATAGOV_API_KEY']}
     response = requests.get(
         'https://api.gsa.gov/technology/datagov/v3/action/package_show',
-        params=payload
+        params=params
         )
     data = response.json()
     return data
@@ -76,6 +90,18 @@ def get_foia_library_list():
 
 # DOL-wide FOIA reading room
 # https://www.dol.gov/general/foia/readroom
+
+
+def get travel_fed_register():
+    pass
+
+
+def get travel_govinfogov():
+    pass
+
+
+def get_stakeholders():
+    pass
 
 
 def get_regulation():
