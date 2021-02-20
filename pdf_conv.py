@@ -4,6 +4,15 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
+def get_usgov_entities():
+    """Get list of current usgov entities from federalregister.gov api"""
+    import requests
+    params = pass
+    response = requests.get(https://federalregister.gov/api/v1/agencies)
+    data = response.json()
+    return data
+
+
 def get_datagov_meta(search_term):
     """Query data.gov for metadata on us gov data sets"""
     import requests
@@ -92,11 +101,13 @@ def get_foia_library_list():
 # https://www.dol.gov/general/foia/readroom
 
 
-def get travel_fed_register():
+def get_travel_fed_register():
     pass
 
+def get_fedregister_travel_sorns():
+    pass
 
-def get travel_govinfogov():
+def get_travel_govinfogov():
     pass
 
 
