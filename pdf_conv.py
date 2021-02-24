@@ -4,11 +4,20 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def get_usgov_entities():
+def get_usgov_orgs():
     """Get list of current usgov entities from federalregister.gov api"""
     import requests
-    params = pass
-    response = requests.get(https://federalregister.gov/api/v1/agencies)
+    response = requests.get(https://federalregister.gov/api/v1/action/agencies)
+    data = response.json()
+    return data
+
+
+def get_datagov_orgs():
+    """Request list of codes for organizations with datasets on data.gov"""
+    import requests
+    params = {'api_key': os.environ['DATAGOV_API_KEY']}
+    response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/organization_list'
+                            params)
     data = response.json()
     return data
 
@@ -18,7 +27,7 @@ def get_datagov_meta(search_term):
     import requests
     import os
     params = {'q': search_term,
-              'organization_type'= 'Federal+Government',
+              'organization_type': 'Federal+Government',
                'api_key': os.environ['DATAGOV_API_KEY']}
     response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/package_search',
         params=params
