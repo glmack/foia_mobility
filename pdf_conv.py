@@ -7,7 +7,7 @@ import pandas as pd
 def get_usgov_orgs():
     """Get list of current usgov entities from federalregister.gov api"""
     import requests
-    response = requests.get(https://federalregister.gov/api/v1/action/agencies)
+    response = requests.get('https://federalregister.gov/api/v1/agencies')
     data = response.json()
     return data
 
