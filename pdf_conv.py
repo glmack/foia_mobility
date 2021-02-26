@@ -4,17 +4,19 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def get_usgov_orgs():
-    """Get list of current usgov entities from federalregister.gov api"""
+def get_usgov_agencies():
+    """Get list of usgov agencies from federalregister.gov api"""
     import requests
+    import os
     response = requests.get('https://federalregister.gov/api/v1/agencies')
     data = response.json()
     return data
 
 
 def get_datagov_orgs():
-    """Request list of codes for organizations with datasets on data.gov"""
+    """Get list of codes for organizations with datasets on data.gov"""
     import requests
+    import os
     params = {'api_key': os.environ['DATAGOV_API_KEY']}
     response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/organization_list'
                             params)
@@ -27,12 +29,29 @@ def get_datagov_meta(search_term):
     import requests
     import os
     params = {'q': search_term,
-              'organization_type': 'Federal+Government',
                'api_key': os.environ['DATAGOV_API_KEY']}
     response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/package_search',
         params=params
         )
     data = response.json()
+    return data
+
+
+def get_datagov_meta_by_org(search_term, org_filter):
+     """Query data.gov for metadata on us gov data sets"""
+    import requests
+    import os
+    params = {'q': search_term,
+               'api_key': os.environ['DATAGOV_API_KEY']}
+    response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/package_search',
+        params=params
+        )
+    data = response.json()
+
+    # filter response by membership in usgov_orgs 
+    for i in data['result']['results']:
+        if i['organization'] is in [usgov_orgs]
+    data['result']['results'][10]['organization']
     return data
 
 
