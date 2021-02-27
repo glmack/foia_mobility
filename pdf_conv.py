@@ -4,24 +4,32 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def get_usgov_agencies():
-    """Get list of usgov agencies from federalregister.gov api"""
-    import requests
-    import os
-    response = requests.get('https://federalregister.gov/api/v1/agencies')
-    data = response.json()
-    return data
-
-
 def get_datagov_orgs():
-    """Get list of codes for organizations with datasets on data.gov"""
+    """Get org codes for organizations with datasets on data.gov"""
     import requests
     import os
     params = {'api_key': os.environ['DATAGOV_API_KEY']}
-    response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/organization_list'
+    response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/organization_list',
                             params)
     data = response.json()
     return data
+
+
+def filter_feds_datagov_orgs(datagov_orgs):
+    """Filters data.gov api org code list for codes of US federal agencies and departments"""
+    filter_string = 'gov'
+    drops = ['cdph-ca-gov',
+             'cdatribe-nsn-gov',
+             'nsgic-local-govt-gis-inventory',
+             'louisville-metro-government',
+             'arkansas-gov',
+             'ca-gov',
+             'nc-gov',
+             'nd-gov',
+             'louisville-metro-government']
+    fed_orgs = [org for org in datagov_orgs['result'] if filter_string in org]
+    fed_orgs = [org for org in fed_orgs if org not in drops]
+    return fed_orgs
 
 
 def get_datagov_meta(search_term):
@@ -49,9 +57,10 @@ def get_datagov_meta_by_org(search_term, org_filter):
     data = response.json()
 
     # filter response by membership in usgov_orgs 
+    usgov_orgs = 
     for i in data['result']['results']:
-        if i['organization'] is in [usgov_orgs]
-    data['result']['results'][10]['organization']
+        if i['organization'] is in [usgov_orgs]:
+            data['result']['results'][10]['organization']
     return data
 
 
@@ -60,10 +69,6 @@ def datagov_to_pd():
     pass
     # data['result']['results'][0]
 
-
-def scan_travel_sorns():
-    """Get system of records notices (SORNs) for travel datasets in usgov agencies"""
-    pass
 
 # https://home.treasury.gov/footer/privacy-act/system-of-records-notices-sorns
 # https://www.dhs.gov/system-records-notices-sorns
@@ -88,6 +93,20 @@ def get_concur_travel_parent_meta():
 # Master Data                   https://catalog.data.gov/dataset/master-data-b4599
 # End to End Travel             https://catalog.data.gov/dataset/end-to-end-travel
 # Travel Manager - Production   https://catalog.data.gov/dataset/travel-manager-production
+
+
+def get_usgov_agencies():
+    """Get list of usgov agencies from federalregister.gov api"""
+    import requests
+    import os
+    response = requests.get('https://federalregister.gov/api/v1/agencies')
+    data = response.json()
+    return data
+
+
+def scan_travel_sorns():
+    """Get system of records notices (SORNs) for travel datasets in usgov agencies"""
+    pass
 
 
 def get_trip_report():
