@@ -16,7 +16,7 @@ def get_datagov_orgs():
 
 
 def filter_feds_datagov_orgs(datagov_orgs):
-    """Filters data.gov api org code list for codes of US federal agencies and departments"""
+    """Filter data.gov api org code list for codes of US federal agencies and departments"""
     filter_string = 'gov'
     drops = ['cdph-ca-gov',
              'cdatribe-nsn-gov',
@@ -45,24 +45,12 @@ def get_datagov_meta(search_term):
     return data
 
 
-def get_datagov_meta_by_org(search_term, org_filter):
-     """Query data.gov for metadata on us gov data sets"""
-    import requests
-    import os
-    params = {'q': search_term,
-               'api_key': os.environ['DATAGOV_API_KEY']}
-    response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/package_search',
-        params=params
-        )
-    data = response.json()
-
-    # filter response by membership in usgov_orgs 
-    usgov_orgs = 
-    for i in data['result']['results']:
-        if i['organization'] is in [usgov_orgs]:
-            data['result']['results'][10]['organization']
+def filter_datagov_meta_by_org(payload):
+    """Filter datagov api response by US federal government orgs"""
+    usgov_orgs = filter_feds_datagov_orgs(orgs)
+    data = [i for i in payload['result']['results'] if i['organization']['name'] in usgov_orgs]
     return data
-
+    
 
 def datagov_to_pd():
     """Read datagov api query responses into pandas and pre-process"""
