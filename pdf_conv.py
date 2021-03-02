@@ -106,6 +106,19 @@ def get_usgov_agencies():
     return data
 
 
+def get_travel_fed_register(search_terms):
+    """Search federal register by GET request to api"""
+    params = {'q': 'fields',
+              'conditions',
+              'term', search_terms
+              'type': 'Notice'}
+    response = requests.get('https://federalregister.gov/api/v1/documents.json')
+# https://www.federalregister.gov/api/v1/documents.json?fields%5B%5D=abstract&per_page=20&order=relevance&conditions%5Bterm%5D=concur&conditions%5Btype%5D%5B%5D=NOTICE
+
+def get_fedregister_travel_sorns():
+    pass
+
+
 def scan_travel_sorns():
     """Get system of records notices (SORNs) for travel datasets in usgov agencies"""
     pass
@@ -150,11 +163,6 @@ def get_foia_library_list():
 # https://www.dol.gov/general/foia/readroom
 
 
-def get_travel_fed_register():
-    pass
-
-def get_fedregister_travel_sorns():
-    pass
 
 def get_travel_govinfogov():
     pass
