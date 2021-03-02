@@ -37,8 +37,9 @@ def get_datagov_meta(search_term):
     import requests
     import os
     params = {'q': search_term,
-               'api_key': os.environ['DATAGOV_API_KEY']}
-    response = requests.get('https://api.gsa.gov/technology/datagov/v3/action/package_search',
+              'api_key': os.environ['DATAGOV_API_KEY']}
+    response = requests.get(
+        'https://api.gsa.gov/technology/datagov/v3/action/package_search',
         params=params
         )
     data = response.json()
@@ -57,6 +58,19 @@ def datagov_to_pd():
     pass
     # data['result']['results'][0]
 
+
+def get_datagov_resource():
+    """Request resources from datagov api"""
+    import os
+    import requests
+    params = {'q': 'concur',
+              'api_key': os.environ['DATAGOV_API_KEY']}
+    response = requests.get(response = requests.get(
+        'https://api.gsa.gov/technology/datagov/v3/action/resource_search',
+        params=params
+        ))
+    data = response.json()
+    return data
 
 # https://home.treasury.gov/footer/privacy-act/system-of-records-notices-sorns
 # https://www.dhs.gov/system-records-notices-sorns
