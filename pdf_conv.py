@@ -106,14 +106,16 @@ def get_usgov_agencies():
     return data
 
 
-def get_travel_fed_register(search_terms):
+def get_travel_fed_register(search_terms: list, doc_type: str = 'notice') -> dict:
     """Search federal register by GET request to api"""
     params = {'q': 'fields',
-              'conditions',
-              'term', search_terms
+              'conditions[term]': search_terms,
+              'conditions[type]': doc_type.upper(),
               'type': 'Notice'}
     response = requests.get('https://federalregister.gov/api/v1/documents.json')
-# https://www.federalregister.gov/api/v1/documents.json?fields%5B%5D=abstract&per_page=20&order=relevance&conditions%5Bterm%5D=concur&conditions%5Btype%5D%5B%5D=NOTICE
+    # https://www.federalregister.gov/api/v1/documents.json?fields%5B%5D=abstract&per_page=20&order=relevance&conditions%5Bterm%5D=concur&conditions%5Btype%5D%5B%5D=NOTICE
+    data = response.json()
+    return data
 
 def get_fedregister_travel_sorns():
     pass
