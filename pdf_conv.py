@@ -106,12 +106,33 @@ def get_usgov_agencies():
     return data
 
 
-def get_travel_fed_register(search_terms: list, doc_type: str = 'notice') -> dict:
+def get_travel_fed_register(search_terms: list = None, 
+                            doc_type: str = 'NOTICE'
+                            # agencies: list = None,
+                            # pub_start_date: None,
+                            # pub_end_date: str = None,
+                            # exact_date: str = None,
+                            # topic_tags: list = None
+                            ) -> dict:
     """Search federal register by GET request to api"""
-    params = {'q': 'fields',
-              'conditions[term]': search_terms,
-              'conditions[type]': doc_type.upper(),
-              'type': 'Notice'}
+    params = {'fields': [
+        'abstract', 'action', 'agencies', 'agency_names', 'body_html_url',
+        'cfr_references', 'citation', 'comment_url', 'comment_close_on',
+        'correction_of', 'corrections', 'dates', 'disposition_notes',
+        'docket_id', 'docked_ids', 'document_number', 'effective_on',
+        'end_page', 'excerpts', 'executive_order_notes', 'html_url',
+        'proclamation_number', 'publication_date', 'start_page', 'subtype',
+        'title', 'toc_doc', 'toc_subject', 'topics', 'type', 'volume'
+        ],
+        'type': doc_type,
+        'conditions[term]': search_terms,
+        'conditions[type]': 'notice',
+              # 'conditions[agencies][]': agencies,
+              # 'conditions[publication_date][gte]': pub_start_date,
+              # 'conditions[publication_date][lte]': pub_end_date,
+              # 'conditions[effective_date][is]': exact_date,
+              # 'conditions[topics][]': topic_tags
+              }
     response = requests.get('https://federalregister.gov/api/v1/documents.json')
     # https://www.federalregister.gov/api/v1/documents.json?fields%5B%5D=abstract&per_page=20&order=relevance&conditions%5Bterm%5D=concur&conditions%5Btype%5D%5B%5D=NOTICE
     data = response.json()
