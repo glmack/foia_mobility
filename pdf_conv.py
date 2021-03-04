@@ -106,24 +106,17 @@ def get_usgov_agencies():
     return data
 
 
-def get_travel_fed_register(search_terms: list = None, 
-                            doc_type: str = 'NOTICE'
-                            # agencies: list = None,
-                            # pub_start_date: None,
-                            # pub_end_date: str = None,
-                            # exact_date: str = None,
-                            # topic_tags: list = None
-                            ) -> dict:
+def get_travel_fed_register(search_terms: list = None) -> dict:
     """Search federal register by GET request to api"""
     params = {'fields[]': [
-        'abstract', 'action', 'agencies', 'agency_names', 'body_html_url',
-        'cfr_references', 'citation', 'dates', 'disposition_notes', 'document_number', 'effective_on',
+        'abstract', 'action', 'agencies', 'agency_names', 'body_html_url', 
+        'citation', 'document_number', 'effective_on',
         'end_page', 'excerpts', 'executive_order_notes', 'html_url',
-        'proclamation_number', 'publication_date', 'start_page', 'subtype',
-        'title', 'toc_doc', 'toc_subject', 'topics', 'type', 'volume'
+        'publication_date', 'start_page', 'title', 'toc_doc',
+        'toc_subject', 'topics', 'type', 'volume'
         ],
-        'conditions[term]': 'search_terms',
-        'conditions[type]': 'notice'
+        'conditions[term]': search_terms,
+        'conditions[type]': 'NOTICE'
               # 'conditions[agencies][]': agencies,
               # 'conditions[publication_date][gte]': pub_start_date,
               # 'conditions[publication_date][lte]': pub_end_date,
