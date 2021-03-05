@@ -106,17 +106,22 @@ def get_usgov_agencies():
     return data
 
 
-def get_travel_fed_register(search_terms: list = None) -> dict:
-    """Search federal register by GET request to api"""
+def search_fed_reg_docs(search_terms: list = None,
+                             doc_type: str = None,
+                             per_page: int = 100,
+                             page: int = 1,
+                             order: list = ['Relevance']
+                             ) -> dict:
+    """Search documents in Federal Register via API GET request"""
+   
     params = {'fields[]': [
         'abstract', 'action', 'agencies', 'agency_names', 'body_html_url', 
-        'citation', 'document_number', 'effective_on',
-        'end_page', 'excerpts', 'executive_order_notes', 'html_url',
-        'publication_date', 'start_page', 'title', 'toc_doc',
-        'toc_subject', 'topics', 'type', 'volume'
+        'citation', 'document_number', 'effective_on', 'end_page',
+        'html_url','publication_date', 'start_page', 'title', 'subtype',
+        'toc_doc', 'toc_subject', 'topics', 'type', 'volume'
         ],
         'conditions[term]': search_terms,
-        'conditions[type]': 'NOTICE'
+        'conditions[type]': doc_type
               # 'conditions[agencies][]': agencies,
               # 'conditions[publication_date][gte]': pub_start_date,
               # 'conditions[publication_date][lte]': pub_end_date,
@@ -126,10 +131,22 @@ def get_travel_fed_register(search_terms: list = None) -> dict:
     response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
     # https://www.federalregister.gov/api/v1/documents.json?fields%5B%5D=abstract&per_page=20&order=relevance&conditions%5Bterm%5D=concur&conditions%5Btype%5D%5B%5D=NOTICE
     data = response.json()
-    return data
+    results = data['results']
 
-def get_fedregister_travel_sorns():
-    pass
+    # TODO
+    
+
+    while data['next_page_url']:
+        response = requests.get(data['next_page_url'])
+        data = response.json()
+        results_pg = data['results']
+        results.append(results)
+    # 'next_page_url': 'https://www.federalregister.gov/api/v1/documents?conditions%5Bterm%5D=travel&conditions%5Btype%5D=NOTICE&fields%5B%5D=abstract&fields%5B%5D=action&fields%5B%5D=agencies&fields%5B%5D=agency_names&fields%5B%5D=body_html_url&fields%5B%5D=citation&fields%5B%5D=document_number&fields%5B%5D=effective_on&fields%5B%5D=end_page&fields%5B%5D=excerpts&fields%5B%5D=executive_order_notes&fields%5B%5D=html_url&fields%5B%5D=publication_date&fields%5B%5D=start_page&fields%5B%5D=title&fields%5B%5D=toc_doc&fields%5B%5D=toc_subject&fields%5B%5D=topics&fields%5B%5D=type&fields%5B%5D=volume&format=json&page=2'
+
+    return results
+
+def filter_fedregister_travel_sorns(response_dict):
+    
 
 
 def scan_travel_sorns():
@@ -174,7 +191,6 @@ def get_foia_library_list():
 
 # DOL-wide FOIA reading room
 # https://www.dol.gov/general/foia/readroom
-
 
 
 def get_travel_govinfogov():
