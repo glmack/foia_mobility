@@ -107,11 +107,11 @@ def get_usgov_agencies():
 
 
 def search_fed_reg_docs(search_terms: list = None,
-                             doc_type: str = None,
-                             per_page: int = 100,
-                             page: int = 1,
-                             order: list = ['Relevance']
-                             ) -> dict:
+                        doc_type: str = None,
+                        per_page: int = 100,
+                        page: int = 1,
+                        order: list = ['Relevance']
+                        ) -> dict:
     """Search documents in Federal Register via API GET request"""
    
     params = {'fields[]': [
@@ -132,15 +132,17 @@ def search_fed_reg_docs(search_terms: list = None,
     # https://www.federalregister.gov/api/v1/documents.json?fields%5B%5D=abstract&per_page=20&order=relevance&conditions%5Bterm%5D=concur&conditions%5Btype%5D%5B%5D=NOTICE
     data = response.json()
     results = data['results']
-
-    # TODO
-    
+    print(data['next_page_url'])
 
     while data['next_page_url']:
-        response = requests.get(data['next_page_url'])
-        data = response.json()
-        results_pg = data['results']
-        results.append(results)
+        try:
+            print(data['next_page_url'])
+            response = requests.get(data['next_page_url'])
+            data = response.json()
+            results = data['results']
+            results.append(results)
+        except KeyError:
+            pass
     # 'next_page_url': 'https://www.federalregister.gov/api/v1/documents?conditions%5Bterm%5D=travel&conditions%5Btype%5D=NOTICE&fields%5B%5D=abstract&fields%5B%5D=action&fields%5B%5D=agencies&fields%5B%5D=agency_names&fields%5B%5D=body_html_url&fields%5B%5D=citation&fields%5B%5D=document_number&fields%5B%5D=effective_on&fields%5B%5D=end_page&fields%5B%5D=excerpts&fields%5B%5D=executive_order_notes&fields%5B%5D=html_url&fields%5B%5D=publication_date&fields%5B%5D=start_page&fields%5B%5D=title&fields%5B%5D=toc_doc&fields%5B%5D=toc_subject&fields%5B%5D=topics&fields%5B%5D=type&fields%5B%5D=volume&format=json&page=2'
 
     return results
