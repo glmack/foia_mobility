@@ -110,10 +110,14 @@ def search_fed_reg_docs(search_terms: list = None,
                         doc_type: str = None,
                         per_page: int = 100,
                         page: int = 1,
+                        year: str = None,
                         order: list = ['Relevance']
                         ) -> dict:
     """Search documents in Federal Register via API GET request"""
    
+    # initialize empty list to store results
+    results = []
+
     params = {'fields[]': [
         'abstract', 'action', 'agencies', 'agency_names', 'body_html_url', 
         'citation', 'document_number', 'effective_on', 'end_page',
@@ -121,31 +125,48 @@ def search_fed_reg_docs(search_terms: list = None,
         'toc_doc', 'toc_subject', 'topics', 'type', 'volume'
         ],
         'conditions[term]': search_terms,
-        'conditions[type]': doc_type
+        'conditions[type]': doc_type,
+        'per_page': per_page,
+        'conditions[effective_date][year]': year
               # 'conditions[agencies][]': agencies,
               # 'conditions[publication_date][gte]': pub_start_date,
               # 'conditions[publication_date][lte]': pub_end_date,
               # 'conditions[effective_date][is]': exact_date,
+              # 'conditions[effective_date][year]
               # 'conditions[topics][]': topic_tags
               }
+
+    has_next_key = False
+    nextKey = ""
+
+    if 'next_page_url' in data:
+        has_next_page = True
+        next_page = data['next_page_url"]
+    
     response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
     # https://www.federalregister.gov/api/v1/documents.json?fields%5B%5D=abstract&per_page=20&order=relevance&conditions%5Bterm%5D=concur&conditions%5Btype%5D%5B%5D=NOTICE
     data = response.json()
-    results = data['results']
+    results_pg = data['results']
     print(data['next_page_url'])
-
+    results.append(results_pg)
+    print(data)
+    total_pages = data['total_pages']
+    more_pages = data['next_page_url']
+    
     while data['next_page_url']:
-        try:
-            print(data['next_page_url'])
-            response = requests.get(data['next_page_url'])
-            data = response.json()
-            results = data['results']
-            results.append(results)
-        except KeyError:
-            pass
+        response = requests.get(data['next_page_url'])
+            
+        data = response.json()
+        results_pg = data['results']
+        results.append(results_pg)
+        print(data)
+
     # 'next_page_url': 'https://www.federalregister.gov/api/v1/documents?conditions%5Bterm%5D=travel&conditions%5Btype%5D=NOTICE&fields%5B%5D=abstract&fields%5B%5D=action&fields%5B%5D=agencies&fields%5B%5D=agency_names&fields%5B%5D=body_html_url&fields%5B%5D=citation&fields%5B%5D=document_number&fields%5B%5D=effective_on&fields%5B%5D=end_page&fields%5B%5D=excerpts&fields%5B%5D=executive_order_notes&fields%5B%5D=html_url&fields%5B%5D=publication_date&fields%5B%5D=start_page&fields%5B%5D=title&fields%5B%5D=toc_doc&fields%5B%5D=toc_subject&fields%5B%5D=topics&fields%5B%5D=type&fields%5B%5D=volume&format=json&page=2'
 
     return results
+
+# 'action': 'Notice of a new system of records.'
+# 'action': 'Notice of a modified system of records.'
 
 def filter_fedregister_travel_sorns(response_dict):
     
