@@ -136,33 +136,33 @@ def search_fed_reg_docs(search_terms: list = None,
               # 'conditions[topics][]': topic_tags
               }
 
-    has_next_key = False
-    nextKey = ""
+    has_next_page = False
+    next_page = ""
+
+    response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
+    data = response.json()
+    results = data['results']
+    total_pages = data['total_pages']
+    print(f'total_pages: {total_pages}')
+    count = data['count']
+    print(f'count: {count}')
 
     if 'next_page_url' in data:
         has_next_page = True
-        next_page = data['next_page_url"]
-    
-    response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
-    # https://www.federalregister.gov/api/v1/documents.json?fields%5B%5D=abstract&per_page=20&order=relevance&conditions%5Bterm%5D=concur&conditions%5Btype%5D%5B%5D=NOTICE
-    data = response.json()
-    results_pg = data['results']
-    print(data['next_page_url'])
-    results.append(results_pg)
-    print(data)
-    total_pages = data['total_pages']
-    more_pages = data['next_page_url']
-    
-    while data['next_page_url']:
-        response = requests.get(data['next_page_url'])
-            
+        next_page = data['next_page_url']
+        print(f'next page: {next_page}')
         data = response.json()
-        results_pg = data['results']
-        results.append(results_pg)
-        print(data)
-
-    # 'next_page_url': 'https://www.federalregister.gov/api/v1/documents?conditions%5Bterm%5D=travel&conditions%5Btype%5D=NOTICE&fields%5B%5D=abstract&fields%5B%5D=action&fields%5B%5D=agencies&fields%5B%5D=agency_names&fields%5B%5D=body_html_url&fields%5B%5D=citation&fields%5B%5D=document_number&fields%5B%5D=effective_on&fields%5B%5D=end_page&fields%5B%5D=excerpts&fields%5B%5D=executive_order_notes&fields%5B%5D=html_url&fields%5B%5D=publication_date&fields%5B%5D=start_page&fields%5B%5D=title&fields%5B%5D=toc_doc&fields%5B%5D=toc_subject&fields%5B%5D=topics&fields%5B%5D=type&fields%5B%5D=volume&format=json&page=2'
-
+        results_page = data['results']
+        results.extend(results_page)
+    
+        response = requests.get(next_page)
+    
+    else:
+        data = response.json()
+        results_page = data['results']
+        results.extend(results_page)
+        has_next_page = False
+   
     return results
 
 # 'action': 'Notice of a new system of records.'
