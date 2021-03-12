@@ -147,22 +147,23 @@ def search_fed_reg_docs(search_terms: list = None,
     count = data['count']
     print(f'count: {count}')
 
-    if 'next_page_url' in data:
-        has_next_page = True
-        next_page = data['next_page_url']
-        print(f'next page: {next_page}')
-        data = response.json()
-        results_page = data['results']
-        results.extend(results_page)
-    
-        response = requests.get(next_page)
-    
-    else:
-        data = response.json()
-        results_page = data['results']
-        results.extend(results_page)
-        has_next_page = False
-   
+    if total_pages > 1:
+        if 'next_page_url' in data:
+            print('in nextpage yes')
+            has_next_page = True
+            results_page = data['results']
+            next_page = data['next_page_url']
+            print(f'next page: {next_page}')
+            results.extend(results_page)
+            response = requests.get(next_page)
+        
+        # need to account for single page (no next_page_url) vs multiple pages with no next page url
+        elif 'next_page_url' not in data:
+            print('in next page no')
+            results_page = data['results']
+            results.extend(results_page)
+            has_next_page = False
+
     return results
 
 # 'action': 'Notice of a new system of records.'
