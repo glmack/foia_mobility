@@ -111,12 +111,19 @@ def search_fed_reg_docs(search_terms: list = None,
                         per_page: int = 100,
                         page: int = 1,
                         year: str = None,
-                        order: list = ['Relevance']
+                        order: list = ['Relevance'],
+                        pub_start_date: str = None, #YYYY-MM-DD
+                        pub_end_date: str = None, #YYYY-MM-DD
+                        effective_start_date: str = None, # YYYY-MM-DD
+                        effective_end_date: str = None, #YYYY-MM-DD
+                        agencies: list = None
                         ) -> dict:
     """Search documents in Federal Register via API GET request"""
    
     # initialize empty list to store results
     results = []
+
+    # endpoint: GET​/documents.{format}
 
     params = {'fields[]': [
         'abstract', 'action', 'agencies', 'agency_names', 'body_html_url', 
@@ -131,9 +138,9 @@ def search_fed_reg_docs(search_terms: list = None,
         'conditions[agencies][]': agencies,
         'conditions[publication_date][gte]': pub_start_date,
         'conditions[publication_date][lte]': pub_end_date,
-              # 'conditions[effective_date][is]': exact_date,
-              # 'conditions[effective_date][year]
-              # 'conditions[topics][]': topic_tags
+        # 'conditions[effective_date][is]': effective_date,
+        # 'conditions[effective_date][year]': effective_year,
+        # 'conditions[topics][]': topic_tags
               }
 
     has_next_page = False
@@ -153,12 +160,13 @@ def search_fed_reg_docs(search_terms: list = None,
             has_next_page = True
             results_page = data['results']
             next_page = data['next_page_url']
-            print(f'next page: {next_page}')
+            print(f'next page: {next_page}') #debug
             results.extend(results_page)
             response = requests.get(next_page)
+            print(response.status_code)
         
         # need to account for single page (no next_page_url) vs multiple pages with no next page url
-        elif 'next_page_url' not in data:
+        else:
             print('in next page no')
             results_page = data['results']
             results.extend(results_page)
@@ -166,10 +174,9 @@ def search_fed_reg_docs(search_terms: list = None,
 
     return results
 
-# 'action': 'Notice of a new system of records.'
-# 'action': 'Notice of a modified system of records.'
-
 def filter_fedregister_travel_sorns(response_dict):
+    # 'action': 'Notice of a new system of records.'
+# 'action': 'Notice of a modified system of records.'
     
 
 
