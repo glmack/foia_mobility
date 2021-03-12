@@ -127,10 +127,10 @@ def search_fed_reg_docs(search_terms: list = None,
         'conditions[term]': search_terms,
         'conditions[type]': doc_type,
         'per_page': per_page,
-        'conditions[effective_date][year]': year
-              # 'conditions[agencies][]': agencies,
-              # 'conditions[publication_date][gte]': pub_start_date,
-              # 'conditions[publication_date][lte]': pub_end_date,
+        'conditions[effective_date][year]': year,
+        'conditions[agencies][]': agencies,
+        'conditions[publication_date][gte]': pub_start_date,
+        'conditions[publication_date][lte]': pub_end_date,
               # 'conditions[effective_date][is]': exact_date,
               # 'conditions[effective_date][year]
               # 'conditions[topics][]': topic_tags
