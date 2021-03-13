@@ -138,6 +138,8 @@ def search_fed_reg_docs(search_terms: list = None,
         'conditions[agencies][]': agencies,
         'conditions[publication_date][gte]': pub_start_date,
         'conditions[publication_date][lte]': pub_end_date,
+        'conditions[effective_date][gte]': effective_start_date,
+        'conditions[effective_date][lte]': effective_end_date,
         # 'conditions[effective_date][is]': effective_date,
         # 'conditions[effective_date][year]': effective_year,
         # 'conditions[topics][]': topic_tags
@@ -148,31 +150,37 @@ def search_fed_reg_docs(search_terms: list = None,
 
     response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
     data = response.json()
-    results = data['results']
+    total_results = data['results']
     total_pages = data['total_pages']
     print(f'total_pages: {total_pages}')
     count = data['count']
     print(f'count: {count}')
 
-    if total_pages > 1:
-        if 'next_page_url' in data:
+    if total_pages>1:
+        while 'next_page_url' in data:
             print('in nextpage yes')
             has_next_page = True
-            results_page = data['results']
             next_page = data['next_page_url']
             print(f'next page: {next_page}') #debug
-            results.extend(results_page)
+            results_page = data['results']
+            total_results.extend(results_page)
+            
+            # call next page
             response = requests.get(next_page)
+            data = response.json()
+            next_page = data['next_page_url']
+
             print(response.status_code)
-        
+            
         # need to account for single page (no next_page_url) vs multiple pages with no next page url
         else:
             print('in next page no')
             results_page = data['results']
-            results.extend(results_page)
+            total_results.extend(results_page)
             has_next_page = False
 
-    return results
+    return total_results
+
 
 def filter_fedregister_travel_sorns(response_dict):
     # 'action': 'Notice of a new system of records.'
