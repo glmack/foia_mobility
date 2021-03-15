@@ -75,6 +75,7 @@ def get_datagov_resource():
 # https://home.treasury.gov/footer/privacy-act/system-of-records-notices-sorns
 # https://www.dhs.gov/system-records-notices-sorns
 
+
 def get_concur_travel_parent_meta():
     """Request metadata on US gov datasets from data.gov"""
     import requests
@@ -121,7 +122,7 @@ def search_fed_reg_docs(search_terms: list = None,
     """Search documents in Federal Register via API GET request"""
    
     # initialize empty list to store results
-    results = []
+    total_results = []
 
     # endpoint: GET​/documents.{format}
 
@@ -150,32 +151,48 @@ def search_fed_reg_docs(search_terms: list = None,
 
     response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
     data = response.json()
-    total_results = data['results']
+    results_page = data['results']
+    len_results = len(results_page)
+    print(f'len results 1: {len_results}')
+    # total_results.extend(results_page)
     total_pages = data['total_pages']
     print(f'total_pages: {total_pages}')
     count = data['count']
     print(f'count: {count}')
+    
+    if 'next_page_url' in data:
+        has_next_page = True
+        next_page_1 = data['next_page_url']
+        print(f'next page 1: {next_page_1}')
 
-    if total_pages>1:
+    # if total_pages>1:
+    #     data = response.json()
+    #     next_page = data['next_page_url']
+    #     response = requests.get(next_page)
+
         while 'next_page_url' in data:
             print('in nextpage yes')
             has_next_page = True
-            next_page = data['next_page_url']
-            print(f'next page: {next_page}') #debug
+            next_page_2 = data['next_page_url']
+            print(f'next page 2: {next_page_2}') #debug
             results_page = data['results']
+            len_results = len(results_page)
+            print(f'len results 2: {len_results}')
             total_results.extend(results_page)
             
             # call next page
-            response = requests.get(next_page)
+            response = requests.get(next_page_2)
             data = response.json()
-            next_page = data['next_page_url']
-
-            print(response.status_code)
+            # next_page = data['next_page_url']
+            status_code = {response.status_code}
+            print(f'status code {status_code}')
             
         # need to account for single page (no next_page_url) vs multiple pages with no next page url
         else:
             print('in next page no')
             results_page = data['results']
+            len_results = len(results_page)
+            print(f'len results 3: {len_results}')
             total_results.extend(results_page)
             has_next_page = False
 
@@ -184,8 +201,7 @@ def search_fed_reg_docs(search_terms: list = None,
 
 def filter_fedregister_travel_sorns(response_dict):
     # 'action': 'Notice of a new system of records.'
-# 'action': 'Notice of a modified system of records.'
-    
+    # # 'action': 'Notice of a modified system of records.'
 
 
 def scan_travel_sorns():
