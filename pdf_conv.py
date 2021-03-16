@@ -151,8 +151,8 @@ def search_fed_reg_docs(search_terms: list = None,
 
     response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
     data = response.json()
-    results_page = data['results']
-    len_results = len(results_page)
+    results = data['results']
+    len_results = len(results)
     print(f'len results 1: {len_results}')
     # total_results.extend(results_page)
     total_pages = data['total_pages']
@@ -162,46 +162,65 @@ def search_fed_reg_docs(search_terms: list = None,
     
     if 'next_page_url' in data:
         has_next_page = True
-        next_page_1 = data['next_page_url']
-        print(f'next page 1: {next_page_1}')
+    #     next_page_1 = data['next_page_url']
+    #     print(f'next page 1: {next_page_1}')
+
+    # else:
+    #     has_next_page = False
+    #     print(f'doesnt have next page')
 
     # if total_pages>1:
     #     data = response.json()
     #     next_page = data['next_page_url']
     #     response = requests.get(next_page)
 
-        while 'next_page_url' in data:
-            print('in nextpage yes')
-            has_next_page = True
-            next_page_2 = data['next_page_url']
-            print(f'next page 2: {next_page_2}') #debug
-            results_page = data['results']
-            len_results = len(results_page)
-            print(f'len results 2: {len_results}')
-            total_results.extend(results_page)
-            
-            # call next page
-            response = requests.get(next_page_2)
-            data = response.json()
-            # next_page = data['next_page_url']
-            status_code = {response.status_code}
-            print(f'status code {status_code}')
+    while 'next_page_url' in data:
+        print('in nextpage yes')
+        total_results.extend(results)
+        # has_next_page = True
+        next_page_2 = data['next_page_url']
+        print(f'next page 2: {next_page_2}') #debug
+        # results = data['results']
+        len_results = len(results)
+        print(f'len results 2: {len_results}')
+        # total_results.extend(results)
+        print(f'adding results 2')
+        
+        # call next page
+        response = requests.get(next_page_2)
+        data = response.json()
+        # next_page = data['next_page_url']
+        status_code = {response.status_code}
+        print(f'status code {status_code}')
             
         # need to account for single page (no next_page_url) vs multiple pages with no next page url
-        else:
-            print('in next page no')
-            results_page = data['results']
-            len_results = len(results_page)
-            print(f'len results 3: {len_results}')
-            total_results.extend(results_page)
-            has_next_page = False
+    # if has_next_page == False:
+    print('in next page no')
+    results = data['results']
+    len_results = len(results)
+    print(f'len results 3: {len_results}')
+    total_results.extend(results)
+    print(f'adding results 3')
+    # has_next_page = False
 
     return total_results
 
 
-def filter_fedregister_travel_sorns(response_dict):
-    # 'action': 'Notice of a new system of records.'
-    # # 'action': 'Notice of a modified system of records.'
+def filter_fedreg_notice_results(response_dict):
+    """Filter results of federal register api call based on action type"""
+    new_notices = []
+    modified_notices = []
+    other_notices = []
+    for i in response_dict:
+        if i['action'] == 'Notice of a new System of Records.':
+            new_notices.append(i)
+        elif i['action'] == 'Notice of a modified system of records.':
+            modified_notices.append(i)
+        else:
+            other_notices.append(i)
+    return new_notices, modified_notices, other_notices
+
+
 
 
 def scan_travel_sorns():
