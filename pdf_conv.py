@@ -176,17 +176,49 @@ def filter_fedreg_notice_results(response_dict):
     """Filter results of federal register api call based on action type"""
     new_notices = []
     modified_notices = []
+    rescinded_notices = []
     other_notices = []
+    blank_notices = []
+
+    add_indicators = [
+        'notice of a new system of records.', 
+        'notice to add a system of records.'
+        'notice of privacy act system of records.'
+        'notice to establish systems of records.']
+
+    update_indicators = [
+        'notice of a modified system of records.':
+        'notice to amend a system of records.'
+        'notice of modification to existing Privacy Act system of records.'
+        'notice of amendment of Privacy Act system of records.'
+        'notice to alter a system of records.'
+    ]
+
+    delete_indicators = [
+        'rescindment of a system of records.',
+        'notice to delete a system of records.'
+    ]
+
     for i in response_dict:
-        if i['action'] == 'Notice of a new System of Records.':
-            new_notices.append(i)
-        elif i['action'] == 'Notice of a modified system of records.':
+        if i['action'] is None:
+            blank_notices.append('')
+        elif i['action'].lower() == 'notice of a new system of records.':
+            # 'Notice to add a system of records.'
+            # ??? 'Notice of Privacy Act system of records.'
+            # 'Notice to establish systems of records.'
+                new_notices.append(i)
+        elif i['action'].lower() == 'notice of a modified system of records.':
+            # 'Notice to amend a system of records.'
+            # 'Notice of modification to existing Privacy Act system of records.'
+            # 'Notice of amendment of Privacy Act system of records.'
+            # 'Notice to alter a system of records.'
             modified_notices.append(i)
+        elif i['action'].lower() == 'rescindment of a system of records.':
+            # 'Notice to delete a system of records.'
+            rescinded_notices.append(i)
         else:
             other_notices.append(i)
-    return new_notices, modified_notices, other_notices
-
-
+    return new_notices, modified_notices, rescinded_notices, other_notices, blank_notices
 
 
 def scan_travel_sorns():
