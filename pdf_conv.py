@@ -124,8 +124,6 @@ def search_fed_reg_docs(search_terms: list = None,
     # initialize empty list to store results
     total_results = []
 
-    # endpoint: GET​/documents.{format}
-
     params = {'fields[]': [
         'abstract', 'action', 'agencies', 'agency_names', 'body_html_url', 
         'citation', 'document_number', 'effective_on', 'end_page',
@@ -149,59 +147,27 @@ def search_fed_reg_docs(search_terms: list = None,
     has_next_page = False
     next_page = ""
 
+    # endpoint: GET​/documents.{format}
     response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
     data = response.json()
     results = data['results']
     len_results = len(results)
-    print(f'len results 1: {len_results}')
-    # total_results.extend(results_page)
     total_pages = data['total_pages']
-    print(f'total_pages: {total_pages}')
     count = data['count']
-    print(f'count: {count}')
     
     if 'next_page_url' in data:
         has_next_page = True
-    #     next_page_1 = data['next_page_url']
-    #     print(f'next page 1: {next_page_1}')
-
-    # else:
-    #     has_next_page = False
-    #     print(f'doesnt have next page')
-
-    # if total_pages>1:
-    #     data = response.json()
-    #     next_page = data['next_page_url']
-    #     response = requests.get(next_page)
 
     while 'next_page_url' in data:
-        print('in nextpage yes')
         total_results.extend(results)
-        # has_next_page = True
         next_page_2 = data['next_page_url']
-        print(f'next page 2: {next_page_2}') #debug
-        # results = data['results']
-        len_results = len(results)
-        print(f'len results 2: {len_results}')
-        # total_results.extend(results)
-        print(f'adding results 2')
         
         # call next page
         response = requests.get(next_page_2)
         data = response.json()
-        # next_page = data['next_page_url']
-        status_code = {response.status_code}
-        print(f'status code {status_code}')
-            
-        # need to account for single page (no next_page_url) vs multiple pages with no next page url
-    # if has_next_page == False:
-    print('in next page no')
+    
     results = data['results']
-    len_results = len(results)
-    print(f'len results 3: {len_results}')
     total_results.extend(results)
-    print(f'adding results 3')
-    # has_next_page = False
 
     return total_results
 
