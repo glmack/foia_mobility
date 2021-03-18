@@ -220,10 +220,11 @@ def filter_fedreg_notice_results(response_dict):
             other_notices.append(i)
     return new_notices, modified_notices, rescinded_notices, other_notices, blank_notices
 
-
-def scan_travel_sorns():
-    """Get system of records notices (SORNs) for travel datasets in usgov agencies"""
-    pass
+def get_sorn_action_tags(response_dict):
+    """Return tags for notice 'actions' in USGOV Federal Register api response"""
+    action_tags = []
+    [action_tags.append(i['action']) for i in response_dict]
+    return action_tags
 
 
 def get_trip_report():
