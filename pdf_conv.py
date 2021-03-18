@@ -220,11 +220,17 @@ def filter_fedreg_notice_results(response_dict):
             other_notices.append(i)
     return new_notices, modified_notices, rescinded_notices, other_notices, blank_notices
 
+
 def get_sorn_action_tags(response_dict):
     """Return tags for notice 'actions' in USGOV Federal Register api response"""
     action_tags = []
-    [action_tags.append(i['action']) for i in response_dict]
-    return action_tags
+    [action_tags.append(i['action'].lower()) for i in response_dict if i['action'] is not None]
+    action_tags = set(action_tags)
+    # action_tags = list(action_tags).sort()
+    a_tags = list(action_tags)
+    a_tags_sorted = a_tags.sort()
+    # TODO (Lee) check is 'system' or 'record' substring in string
+    return a_tags
 
 
 def get_trip_report():
