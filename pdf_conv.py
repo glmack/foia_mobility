@@ -172,6 +172,17 @@ def search_fed_reg_docs(search_terms: list = None,
     return total_results
 
 
+def get_sorn_action_tags(response_d):
+    """Return tags for notice 'actions' in USGOV Federal Register api response"""
+    action_tags = []
+    [action_tags.append(i['action'].lower()) for i in response_d if i['action'] is not None]
+    action_tags = set(action_tags)
+    a_tags = list(action_tags)
+    a_tags.sort()
+    [i for i in a_tags if any(j in i for j in ['record', 'system'])]
+    return a_tags
+
+
 def filter_fedreg_notice_results(response_dict):
     """Filter results of federal register api call based on action type"""
     new_notices = []
@@ -196,9 +207,13 @@ def filter_fedreg_notice_results(response_dict):
 
     delete_indicators = [
         'rescindment of a system of records.',
-        'notice to delete a system of records.'
+        'notice to delete a system of records.',
+        'rescindment of a system of records notice (sorn).',
+        'rescindment of a system of records notice.',
+        'rescindment of notices and notice of a new system of records.'
     ]
-
+    # TODO (Lee) some notices are combination of create, update and delete
+    # TODO incorporate action_tags into checks below
     for i in response_dict:
         if i['action'] is None:
             blank_notices.append('')
@@ -219,17 +234,6 @@ def filter_fedreg_notice_results(response_dict):
         else:
             other_notices.append(i)
     return new_notices, modified_notices, rescinded_notices, other_notices, blank_notices
-
-
-def get_sorn_action_tags(response_d):
-    """Return tags for notice 'actions' in USGOV Federal Register api response"""
-    action_tags = []
-    [action_tags.append(i['action'].lower()) for i in response_d if i['action'] is not None]
-    action_tags = set(action_tags)
-    a_tags = list(action_tags)
-    # a_tags_sorted = a_tags.sort()
-    # TODO (Lee) check is 'system' or 'record' substring in string
-    return a_tags
 
 
 def get_trip_report():
