@@ -175,11 +175,16 @@ def search_fed_reg_docs(search_terms: list = None,
 def get_sorn_action_tags(response_d):
     """Return tags for notice 'actions' in USGOV Federal Register api response"""
     action_tags = []
-    [action_tags.append(i['action'].lower()) for i in response_d if i['action'] is not None]
+    # [action_tags.append(i['action'].lower()) for i in response_d if i['action'] is not None]
+    for i in response_d:
+        if i['action'] is not None:
+            action_tags.append(i['action'].lower())
+        else:
+            continue
     action_tags = set(action_tags)
     a_tags = list(action_tags)
     a_tags.sort()
-    [i for i in a_tags if any(j in i for j in ['record', 'system'])]
+    # a_tags_filtered = [i for i in a_tags] # if any(j in i for j in ['record', 'system'])]
     return a_tags
 
 
@@ -190,6 +195,8 @@ def filter_fedreg_notice_results(response_dict):
     deleted_notices = []
     other_notices = []
     blank_notices = []
+
+    # TODO (Lee) - account for keywords 'system', 'systems', and 'records'
 
     created_indicators = [
         'notice of a new system of records.', 
@@ -202,6 +209,7 @@ def filter_fedreg_notice_results(response_dict):
         'notice of new privacy act system of records.',
         'notice of privacy act system of records.',
         'notice of proposed privacy act system of records.',
+        'notice of proposed new system of records.',
         'notice to add a system of records.',
         'notice to establish systems of records.',
         'notice to reinstate a system of records.']
@@ -226,11 +234,9 @@ def filter_fedreg_notice_results(response_dict):
         'notice to alter a system of records.',
         'notice to alter an existing privacy act system of records.',
         'notice to amend a system of records.',
-        'notice of revised privacy act system notices.',
-        'notice of revised systems of records.'
-        'rescindment of a system of records notice (sorn).',
-        'rescindment of a system of records notice.',
-        'rescindment of notices and notice of a new system of records.'
+        'notice of revised privacy act system notices.', # does not contain word 'record'
+        'notice of revised systems of records.',
+        'notice to amend a record system.'
     ]
 
     deleted_indicators = [
@@ -251,24 +257,21 @@ def filter_fedreg_notice_results(response_dict):
         if i['action'] is None:
             blank_notices.append('')
         elif i['action'].lower() in created_indicators:
-        # elif i['action'].lower() == 'notice of a new system of records.':
-            # 'Notice to add a system of records.'
-            # ??? 'Notice of Privacy Act system of records.'
-            # 'Notice to establish systems of records.'
                 created_notices.append(i)
         elif i['action'].lower() in modified_indicators:
-        # elif i['action'].lower() == 'notice of a modified system of records.':
-            # 'Notice to amend a system of records.'
-            # 'Notice of modification to existing Privacy Act system of records.'
-            # 'Notice of amendment of Privacy Act system of records.'
-            # 'Notice to alter a system of records.'
             modified_notices.append(i)
         elif i['action'].lower() in deleted_indicators:
-            # 'Notice to delete a system of records.'
             deleted_notices.append(i)
         else:
             other_notices.append(i)
     return created_notices, modified_notices, deleted_notices, other_notices, blank_notices
+
+
+def get_system_name_number(fedreg_notices)
+    """Return system of records name and number from notice using xml path"""
+    # xml path system name and number: //*[@id="h-10"]
+    # xml path data page //*[@id="p-30"]
+
 
 
 def get_trip_report():
