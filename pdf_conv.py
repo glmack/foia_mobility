@@ -185,55 +185,90 @@ def get_sorn_action_tags(response_d):
 
 def filter_fedreg_notice_results(response_dict):
     """Filter results of federal register api call based on action type"""
-    new_notices = []
+    created_notices = []
     modified_notices = []
-    rescinded_notices = []
+    deleted_notices = []
     other_notices = []
     blank_notices = []
 
-    add_indicators = [
+    created_indicators = [
         'notice of a new system of records.', 
         'notice to add a system of records.'
-        'notice of privacy act system of records.'
-        'notice to establish systems of records.']
+        'notice of privacy act system of records.',
+        'notice to establish systems of records.',
+        'notice of a new privacy act system of records.',
+        'notice of a new system of records.',
+        'notice of a new system of records; and rescindment of four system of records notices.',
+        'notice of new privacy act system of records.',
+        'notice of privacy act system of records.',
+        'notice of proposed privacy act system of records.',
+        'notice to add a system of records.',
+        'notice to establish systems of records.',
+        'notice to reinstate a system of records.']
 
-    update_indicators = [
-        'notice of a modified system of records.':
-        'notice to amend a system of records.'
-        'notice of modification to existing Privacy Act system of records.'
-        'notice of amendment of Privacy Act system of records.'
-        'notice to alter a system of records.'
-    ]
-
-    delete_indicators = [
-        'rescindment of a system of records.',
-        'notice to delete a system of records.',
+    modified_indicators = [
+        'notice of a modified system of records.',
+        'notice to amend a system of records.',
+        'notice of modification to existing Privacy Act system of records.',
+        'notice of amendment of Privacy Act system of records.',
+        'notice to alter a system of records.',
+        'altered system of records and housekeeping changes.',
+        'notice of a modified privacy act system of records.',
+        'notice of a modified system of records.',
+        'notice of amendment of privacy act system of records.',
+        'notice of amendment to system of records.',
+        'notice of changes to systems of records and addition of routine use.',
+        'notice of general amendment to federal reserve board of governors systems of records.',
+        'notice of modification to existing privacy act system of records.',
+        'notice of modified privacy act system of records.',
+        'notice of modified system of records.',
+        'notice of modified systems of records.',
+        'notice to alter a system of records.',
+        'notice to alter an existing privacy act system of records.',
+        'notice to amend a system of records.',
+        'notice of revised privacy act system notices.',
+        'notice of revised systems of records.'
         'rescindment of a system of records notice (sorn).',
         'rescindment of a system of records notice.',
         'rescindment of notices and notice of a new system of records.'
     ]
-    # TODO (Lee) some notices are combination of create, update and delete
+
+    deleted_indicators = [
+        'rescindment of a system of records.',
+        'notice to delete a system of records.',
+        'rescindment of a system of records notice (sorn).',
+        'rescindment of a system of records notice.',
+        'rescindment of notices and notice of a new system of records.',
+        'notice to delete a system of records.'
+    ]
+
+ # others/multiple actions:'notice of the rescission, establishment, and amendment of systems of records.',,
+ # 'notice to reinstate a system of records.',
+ # 'notice: publication of new and revised systems of records and standard disclosures.',
+
     # TODO incorporate action_tags into checks below
     for i in response_dict:
         if i['action'] is None:
             blank_notices.append('')
-        elif i['action'].lower() == 'notice of a new system of records.':
+        elif i['action'].lower() in created_indicators:
+        # elif i['action'].lower() == 'notice of a new system of records.':
             # 'Notice to add a system of records.'
             # ??? 'Notice of Privacy Act system of records.'
             # 'Notice to establish systems of records.'
-                new_notices.append(i)
-        elif i['action'].lower() == 'notice of a modified system of records.':
+                created_notices.append(i)
+        elif i['action'].lower() in modified_indicators:
+        # elif i['action'].lower() == 'notice of a modified system of records.':
             # 'Notice to amend a system of records.'
             # 'Notice of modification to existing Privacy Act system of records.'
             # 'Notice of amendment of Privacy Act system of records.'
             # 'Notice to alter a system of records.'
             modified_notices.append(i)
-        elif i['action'].lower() == 'rescindment of a system of records.':
+        elif i['action'].lower() in deleted_indicators:
             # 'Notice to delete a system of records.'
-            rescinded_notices.append(i)
+            deleted_notices.append(i)
         else:
             other_notices.append(i)
-    return new_notices, modified_notices, rescinded_notices, other_notices, blank_notices
+    return created_notices, modified_notices, deleted_notices, other_notices, blank_notices
 
 
 def get_trip_report():
