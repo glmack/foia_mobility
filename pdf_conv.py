@@ -172,11 +172,11 @@ def search_fed_reg_docs(search_terms: list = None,
     return total_results
 
 
-def get_sorn_action_tags(response_d):
-    """Return tags for notice 'actions' in USGOV Federal Register api response"""
+def get_notice_action_tags(notices):
+    """Return list of notice 'action' tags from usgov federal register api response"""
     action_tags = []
-    # [action_tags.append(i['action'].lower()) for i in response_d if i['action'] is not None]
-    for i in response_d:
+    # [action_tags.append(i['action'].lower()) for i in notices if i['action'] is not None]
+    for i in notices:
         if i['action'] is not None:
             action_tags.append(i['action'].lower())
         else:
@@ -188,8 +188,8 @@ def get_sorn_action_tags(response_d):
     return a_tags
 
 
-def filter_fedreg_notice_results(response_dict):
-    """Filter results of federal register api call based on action type"""
+def filter_fedreg_notice_results(notices):
+    """Filter federal register api response based on action type"""
     created_notices = []
     modified_notices = []
     deleted_notices = []
@@ -252,8 +252,7 @@ def filter_fedreg_notice_results(response_dict):
  # 'notice to reinstate a system of records.',
  # 'notice: publication of new and revised systems of records and standard disclosures.',
 
-    # TODO incorporate action_tags into checks below
-    for i in response_dict:
+    for i in notices:
         if i['action'] is None:
             blank_notices.append('')
         elif i['action'].lower() in created_indicators:
@@ -265,6 +264,28 @@ def filter_fedreg_notice_results(response_dict):
         else:
             other_notices.append(i)
     return created_notices, modified_notices, deleted_notices, other_notices, blank_notices
+
+
+def get_sorn_html(notices):
+    """Extract fields from sorn doc html"""
+    import requests
+    from bs4 import BeautifulSoup
+    system_names = []
+    for notice in notices:
+        url = notice['body_html_url']
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        system_name = soup.find(string ='SYSTEM NAME AND NUMBER')
+        if system_name is not None:
+            data_page = system_name.findNext('p').text
+            if data_page is not None:
+                system_names.append(data_page)
+            else:
+                continue
+        else:
+            continue
+    return system_names
+
 
 
 def get_system_name_number(fedreg_notices)
