@@ -276,12 +276,15 @@ def get_sorn_html(notices):
         url = notice['body_html_url']
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        system_name = soup.find(string ='SYSTEM NAME AND NUMBER')
-        if system_name is not None:
-            data_page = system_name.findNext('p').text
-            if data_page is not None:
+        h3_tag = soup.h3 #(string ='SYSTEM NAME AND NUMBER')
+        # TODO (Lee) include h2_tag also
+
+        # (text=lambda t: t and any(x in t for x in ['Open', 'Closed']))
+        if h3_tag is not None:
+            h3_data = h3_tag.findNext('p').text
+            if h3_data is not None:
                 print('dp is not none')
-                notice['system_name'] = data_page
+                notice['system_name'] = h3_data
             else:
                 print('else 1')
                 continue
