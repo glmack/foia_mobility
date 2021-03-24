@@ -272,6 +272,7 @@ def get_sorn_html(notices):
     from bs4 import BeautifulSoup
     system_names = []
     for notice in notices:
+        print('notice')
         url = notice['body_html_url']
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -279,12 +280,17 @@ def get_sorn_html(notices):
         if system_name is not None:
             data_page = system_name.findNext('p').text
             if data_page is not None:
-                system_names.append(data_page)
+                print('dp is not none')
+                notice['system_name'] = data_page
             else:
+                print('else 1')
                 continue
+        elif system_name is None:
+            print('else 2: sytem name is none')
         else:
+            print('others')
             continue
-    return system_names
+    return notices
 
 
 
