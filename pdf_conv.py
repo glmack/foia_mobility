@@ -72,9 +72,6 @@ def get_datagov_resource():
     data = response.json()
     return data
 
-# https://home.treasury.gov/footer/privacy-act/system-of-records-notices-sorns
-# https://www.dhs.gov/system-records-notices-sorns
-
 
 def get_concur_travel_parent_meta():
     """Request metadata on US gov datasets from data.gov"""
@@ -107,7 +104,7 @@ def get_usgov_agencies():
     return data
 
 
-def search_fed_reg_docs(search_terms: list = None,
+def search_fedreg_docs(search_terms: list = None,
                         doc_type: str = None,
                         per_page: int = 100,
                         page: int = 1,
@@ -172,7 +169,7 @@ def search_fed_reg_docs(search_terms: list = None,
     return total_results
 
 
-def get_notice_action_tags(notices):
+def get_notice_actions(notices):
     """Return list of notice 'action' tags from usgov federal register api response"""
     action_tags = []
     # [action_tags.append(i['action'].lower()) for i in notices if i['action'] is not None]
@@ -188,7 +185,7 @@ def get_notice_action_tags(notices):
     return a_tags
 
 
-def filter_fedreg_notice_results(notices):
+def filter_notice_results(notices):
     """Filter federal register api response based on action type"""
     created_notices = []
     modified_notices = []
@@ -266,7 +263,7 @@ def filter_fedreg_notice_results(notices):
     return created_notices, modified_notices, deleted_notices, other_notices, blank_notices
 
 
-def get_sorn_html(notices):
+def get_record_system_names(notices):
     """Extract fields from sorn doc html"""
     import requests
     from bs4 import BeautifulSoup
@@ -276,19 +273,20 @@ def get_sorn_html(notices):
         url = notice['body_html_url']
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        h3_tag = soup.h3 #(string ='SYSTEM NAME AND NUMBER')
+        name_header = soup.find(text=re.compile('SYSTEM NAME AND NUMBER'))
+        # h3_tag = soup.h3 #(string ='SYSTEM NAME AND NUMBER')
         # TODO (Lee) include h2_tag also
 
         # (text=lambda t: t and any(x in t for x in ['Open', 'Closed']))
-        if h3_tag is not None:
-            h3_data = h3_tag.findNext('p').text
-            if h3_data is not None:
+        if name_header is not None:
+            name_data = name_header.findNext('p').text
+            if name_data is not None:
                 print('dp is not none')
-                notice['system_name'] = h3_data
+                notice['system_name'] = name_data
             else:
                 print('else 1')
                 continue
-        elif system_name is None:
+        elif name_header is None:
             print('else 2: sytem name is none')
         else:
             print('others')
@@ -297,14 +295,7 @@ def get_sorn_html(notices):
 
 
 
-def get_system_name_number(fedreg_notices)
-    """Return system of records name and number from notice using xml path"""
-    # xml path system name and number: //*[@id="h-10"]
-    # xml path data page //*[@id="p-30"]
-
-
-
-def get_trip_report():
+def get_d2d_trip_report():
     """Get 2/2020 trip report from d2d dashboard"""
     filepath = '/Users/lee/Documents/code/foia_mobility/TRip_Relocation.pdf'
     response = requests.get('https://d2d.gsa.gov/report/gsa-ogp-business-travel-and-relocation-dashboard')
@@ -366,3 +357,15 @@ def get_regulation():
 # ----------
 
 concur_travel_parent_meta = get_concur_travel_parent_meta()
+
+docs = search_fedreg_docs(search_terms='system of records+travel', 
+                          doc_type='NOTICE', 
+                          per_page=100, 
+                          effective_start_date='1994-01-01',
+                          effective_end_date='2020-12-31')')
+
+
+# ----------
+# TODO (Lee) - evaluate agency sites that describe sorns, e.g.:
+# https://home.treasury.gov/footer/privacy-act/system-of-records-notices-sorns
+# https://www.dhs.gov/system-records-notices-sorns
