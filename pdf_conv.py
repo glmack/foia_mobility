@@ -105,20 +105,23 @@ def get_usgov_agencies():
 
 
 def search_fedreg_docs(search_terms: list = None,
-                        doc_type: str = None,
-                        per_page: int = 100,
-                        page: int = 1,
-                        year: str = None,
-                        order: list = ['Relevance'],
-                        pub_start_date: str = None, #YYYY-MM-DD
-                        pub_end_date: str = None, #YYYY-MM-DD
-                        effective_start_date: str = None, # YYYY-MM-DD
-                        effective_end_date: str = None, #YYYY-MM-DD
-                        agencies: list = None
-                        ) -> dict:
+                       doc_type: str = None,
+                       per_page: int = 100,
+                       page: int = 1,
+                       year: str = None,
+                       order: list = ['Relevance'],
+                       pub_start_date: str = None, #YYYY-MM-DD
+                       pub_end_date: str = None, #YYYY-MM-DD
+                       effective_start_date: str = None, # YYYY-MM-DD
+                       effective_end_date: str = None, #YYYY-MM-DD
+                       effective_exact_date: str = None, #YYYY-MM-DD
+                       # effective_year: str = None, #YYYY
+                       # topic_tags: list[str] = None,
+                       agencies: list = None
+                      ) -> dict:
     """Search documents in Federal Register via API GET request"""
    
-    # initialize empty list to store results
+    # initialize list to store results
     total_results = []
 
     params = {'fields[]': [
@@ -136,7 +139,7 @@ def search_fedreg_docs(search_terms: list = None,
         'conditions[publication_date][lte]': pub_end_date,
         'conditions[effective_date][gte]': effective_start_date,
         'conditions[effective_date][lte]': effective_end_date,
-        # 'conditions[effective_date][is]': effective_date,
+        'conditions[effective_date][is]': effective_exact_date,
         # 'conditions[effective_date][year]': effective_year,
         # 'conditions[topics][]': topic_tags
               }
@@ -195,6 +198,7 @@ def filter_notice_results(notices):
 
     # TODO (Lee) - account for keywords 'system', 'systems', and 'records'
 
+    # TODO (Lee) - keywords: ['new', 'add', 'establish', 'proposed', 'reinstate']
     created_indicators = [
         'notice of a new system of records.', 
         'notice to add a system of records.'
@@ -211,6 +215,7 @@ def filter_notice_results(notices):
         'notice to establish systems of records.',
         'notice to reinstate a system of records.']
 
+    # TODO (Lee): keywords = ['modified', 'amend', 'alter', 'altered', 'amendment', 'modification', 'revised']
     modified_indicators = [
         'notice of a modified system of records.',
         'notice to amend a system of records.',
@@ -236,6 +241,7 @@ def filter_notice_results(notices):
         'notice to amend a record system.'
     ]
 
+    # TODO (Lee): keywords = ['rescind', 'delete', 'rescindment']
     deleted_indicators = [
         'rescindment of a system of records.',
         'notice to delete a system of records.',
