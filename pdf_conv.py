@@ -172,7 +172,7 @@ def search_fedreg_docs(search_terms: list = None,
     return total_results
 
 
-def get_notice_actions(notices):
+def get_actions_set(notices):
     """Return list of notice 'action' tags from usgov federal register api response"""
     action_tags = []
     # [action_tags.append(i['action'].lower()) for i in notices if i['action'] is not None]
@@ -300,7 +300,6 @@ def get_record_system_names(notices):
     return notices
 
 
-
 def get_d2d_trip_report():
     """Get 2/2020 trip report from d2d dashboard"""
     filepath = '/Users/lee/Documents/code/foia_mobility/TRip_Relocation.pdf'
@@ -369,6 +368,8 @@ docs = search_fedreg_docs(search_terms='system of records+travel',
                           per_page=100, 
                           effective_start_date='1994-01-01',
                           effective_end_date='2020-12-31')')
+
+# actions_set = get_actions_set(notices)
 
 
 # ----------
