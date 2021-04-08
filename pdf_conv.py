@@ -15,7 +15,7 @@ def get_datagov_orgs():
     return data
 
 
-def filter_feds_datagov_orgs(datagov_orgs):
+def filter_datagov_fed_orgs(datagov_orgs):
     """Filter data.gov api org code list for codes of US federal agencies and departments"""
     filter_string = 'gov'
     drops = ['cdph-ca-gov',
@@ -95,7 +95,7 @@ def get_concur_travel_parent_meta():
 # Travel Manager - Production   https://catalog.data.gov/dataset/travel-manager-production
 
 
-def get_usgov_agencies():
+def get_fedreg_usg_agencies():
     """Get list of usgov agencies from federalregister.gov api"""
     import requests
     import os
@@ -120,8 +120,7 @@ def search_fedreg_docs(search_terms: list = None,
                        agencies: list = None
                       ) -> dict:
     """Search documents in Federal Register via API GET request"""
-   
-    # initialize list to store results
+ 
     total_results = []
 
     params = {'fields[]': [
@@ -172,7 +171,7 @@ def search_fedreg_docs(search_terms: list = None,
     return total_results
 
 
-def get_actions_set(notices):
+def get_unique_actions(notices):
     """Return list of notice 'action' tags from usgov federal register api response"""
     action_tags = []
     # [action_tags.append(i['action'].lower()) for i in notices if i['action'] is not None]
@@ -197,6 +196,11 @@ def filter_notice_results(notices):
     blank_notices = []
 
     # TODO (Lee) - account for keywords 'system', 'systems', and 'records'
+
+    # TODO (Lee) - account for blank and generic 'Notice' actions, ('systems of records' - plural ?)e.g.:
+    # 'body_html_url': 'https://www.federalregister.gov/documents/full_text/html/2010/06/07/2010-13481.html',
+    # 'https://www.federalregister.gov/documents/full_text/html/2010/07/26/2010-17934.html',
+    # 'body_html_url': 'https://www.federalregister.gov/documents/full_text/html/2011/01/05/2010-33295.html',
 
     # TODO (Lee) - keywords: ['new', 'add', 'establish', 'proposed', 'reinstate']
     created_indicators = [
@@ -333,10 +337,6 @@ def get_foia_library_list():
     import requests
     response = requests.get('https://works.bepress.com/lisa_deluca/40/download/')
     pd.read_excel()
-
-
-# DOL-wide FOIA reading room
-# https://www.dol.gov/general/foia/readroom
 
 
 def get_travel_govinfogov():
