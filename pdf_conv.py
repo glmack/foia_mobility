@@ -187,8 +187,26 @@ def get_unique_actions(notices):
     return a_tags
 
 
-def filter_notice_results(notices):
-    """Filter federal register api response based on action type"""
+def filter_sorns(notices):
+    """Filter notice results for system of record notices""" 
+    matches = ['system', 'record']
+    action_match_notices = []
+    abstract_match_notices = []
+    no_match_notices = []
+    for i in notices:
+        if any(match in i['action'] for match in matches):
+            action_match_notices.append(i)
+        elif any(match in i['abstract'] for match in matches):
+            abstract_match_notices.append(i)
+        else:
+            no_match_notices.append(i)
+            
+    return action_match_notices, abstract_match_notices, no_match_notices
+            
+
+
+def filter_sorn_operations(notices):
+    """Categorize federal register api response based on update type"""
     created_notices = []
     modified_notices = []
     deleted_notices = []
@@ -369,7 +387,7 @@ docs = search_fedreg_docs(search_terms='system of records+travel',
                           effective_start_date='1994-01-01',
                           effective_end_date='2020-12-31')')
 
-# actions_set = get_actions_set(notices)
+# actions_set = get_unique_actions(notices)
 
 
 # ----------
