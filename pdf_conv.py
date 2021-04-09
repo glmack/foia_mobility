@@ -194,28 +194,37 @@ def filter_sorns(notices):
     abstract_match_notices = []
     no_match_notices = []
     other_notices = []
+    none_notices = []
+    other_notices = []
     for i in notices:
-        if i['action'] is not None and i['abstract'] is not None:
-            if any(match in i['action'] for match in matches):
+
+        if i['action'] is None and i['abstract'] is None:
+            none_notices.append(i)
+        
+        elif i['action'] is not None and i['abstract'] is not None:
+            if any(match in i['action'].lower() for match in matches):
                 action_match_notices.append(i)
-            elif any(match in i['abstract'] for match in matches) not:
+            elif all(match in i['abstract'].lower() for match in matches):
                 abstract_match_notices.append(i)
             else:
                 no_match_notices.append(i)
-        elif i['action'] is not None and i['abstract'] is None:
-            if any(match in i['action'] for match in matches):
+
+        elif i['action'] is not None and i['abstract'].lower() is None:
+            if any(match in i['action'].lower() for match in matches):
                 abstract_match_notices.append(i)
             else:
                 no_match_notices.append(i)
-        elif i['action'] is None and i['abstract'] is not None:
-            if any(match in i['abstract'] for match in matches):
+
+        elif i['action'] is None and i['abstract'].lower() is not None:
+            if all(match in i['abstract'].lower() for match in matches):
                 abstract_match_notices.append(i)
-        elif i['action'] is None and i['abstract'] is None:
-            no_match_notices.append(i)
+            else:
+                no_match_notices.append(i)
+        
         else:
             other_notices.append(i)
     
-    return action_match_notices, abstract_match_notices, no_match_notices, other_notices
+    return action_match_notices, abstract_match_notices, no_match_notices, none_notices, other_notices
             
 
 def filter_sorn_operations(notices):
