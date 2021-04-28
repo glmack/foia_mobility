@@ -1,7 +1,7 @@
-import tabula
+# import tabula
 import requests
-import matplotlib.pyplot as plt
-import pandas as pd
+# import matplotlib.pyplot as plt
+# import pandas as pd
 
 
 def get_datagov_orgs():
@@ -408,6 +408,15 @@ docs = search_fedreg_docs(search_terms='system of records+travel',
                           per_page=100, 
                           effective_start_date='1994-01-01',
                           effective_end_date='2020-12-31')')
+
+sfr1 = search_fedreg_docs(search_terms='system of records+travel',
+                          doc_type='NOTICE',
+                          per_page=100,
+                          effective_start_date='2010-01-01',
+                          effective_end_date='2020-12-31')
+
+fs1 = filter_sorns(sfr1)
+
 
 # actions_set = get_unique_actions(notices)
 
