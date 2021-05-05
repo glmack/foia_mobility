@@ -417,7 +417,6 @@ sfr1 = search_fedreg_docs(search_terms='system of records+travel',
 
 fs1 = filter_sorns(sfr1)
 
-
 # actions_set = get_unique_actions(notices)
 
 
