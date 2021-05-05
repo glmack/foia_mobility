@@ -419,7 +419,6 @@ fs1 = filter_sorns(sfr1)
 
 # actions_set = get_unique_actions(notices)
 
-
 # ----------
 # TODO (Lee) - evaluate agency sites that describe sorns, e.g.:
 # https://home.treasury.gov/footer/privacy-act/system-of-records-notices-sorns
