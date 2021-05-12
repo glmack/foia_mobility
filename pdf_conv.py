@@ -186,8 +186,12 @@ def get_unique_actions(notices):
     # a_tags_filtered = [i for i in a_tags] # if any(j in i for j in ['record', 'system'])]
     return a_tags
 
+def xstr(s):
+    if s is None:
+        return ''
+    return str(s).lower()
 
-def filter_sorns(notices):
+def filter_sorns(notices, matches):
     """Filter notice results for system of record notices""" 
     matches = ['system', 'record']
     action_matches = []
@@ -196,48 +200,29 @@ def filter_sorns(notices):
     no_matches = []
     other_notices = []
     none_notices = []
-    for i in notices:
 
-        if i['action'] is None and i['abstract'] and i['title'] is None:
-            none_notices.append(i)
-        
-        # elif i['action'] is not None and i['abstract'] is not None:
-        #     if any(match in i['action'].lower() for match in matches):
-        #         action_matches.append(i)
-        #     elif all(match in i['abstract'].lower() for match in matches):
-        #         abstract_matches.append(i)
-        #     elif all(match in i['title'].lower() for match in matches):
-        #         title_matches.append(i)
-        #     else:
-        #         no_matches.append(i)
+    for notice in notices:
+        action = xstr(notice['action']).lower()
+        abstract = xstr(notice['abstract']).lower()
+        title = xstr(notice['title']).lower()
+        fields = [action, abstract, notice]
 
-        elif i['action'] is not None:
-            if any(match in i['action'].lower() for match in matches):
-                action_matches.append(i)
+        if action is None and abstract is None and title is None:
+            none_notices.append(notice)
         
-            elif all(match in i['abstract'].lower() for match in matches):
-                abstract_matches.append(i)
+        elif action is not None:
+            # if all(match in i['action'].lower() for match in matches):
+            if all(x in action for x in matches):
+                action_matches.append(notice)
         
-            elif all(match in i['title'].lower() for match in matches):
-                title_matches.append(i)
-            
-            else:
-                no_matches.append(i)
+        elif abstract is not None:
+            abstract_matches.append(notice)
 
-        # elif i['action'] is not None and i['abstract'].lower() is None:
-        #     if any(match in i['action'].lower() for match in matches):
-        #         abstract_matches.append(i)
-        #     else:
-        #         no_matches.append(i)
+        elif title is not None:
+            title_matches.append(notice)
 
-        # elif i['action'] is None and i['abstract'].lower() is not None:
-        #     if all(match in i['abstract'].lower() for match in matches):
-        #         abstract_matches.append(i)
-        #     else:
-        #         no_matches.append(i)
-        
         else:
-            other_notices.append(i)
+            other_notices.append(notice)
     
     return action_matches, abstract_matches, title_matches, no_matches, none_notices, other_notices
             
