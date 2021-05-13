@@ -171,6 +171,46 @@ def search_fedreg_docs(search_terms: list = None,
     return total_results
 
 
+def xstr(s):
+    if s is None:
+        return ''
+    return str(s).lower()
+
+
+def filter_sorns(notices):
+    """Filter notice results for system of record notices""" 
+    matches = ['system', 'record']
+    action_matches = []
+    abstract_matches = []
+    title_matches = []
+    no_matches = []
+    other_notices = []
+    none_notices = []
+
+    for notice in notices:
+        if notice['action'] is None and notice['abstract'] is None and notice['title'] is None:
+            none_notices.append(notice)
+        
+        elif notice['action'] is not None or notice['abstract'] is not None or notice['title'] is not None:
+            action = xstr(notice['action']).lower()
+            abstract = xstr(notice['abstract']).lower()
+            title = xstr(notice['title']).lower()
+            # fields = [action, abstract, notice]
+            
+            if all(x in action for x in matches):
+                action_matches.append(notice)
+            elif all(x in abstract for x in matches):
+                abstract_matches.append(notice)
+            elif all(x in title for x in matches):
+                title_matches.append(notice)
+            else:
+                no_matches.append(notice)
+        
+        else:
+            pass
+    
+    return action_matches, abstract_matches, title_matches, no_matches, none_notices, other_notices
+
 def get_unique_actions(notices):
     """Return list of notice 'action' tags from usgov federal register api response"""
     action_tags = []
@@ -185,46 +225,6 @@ def get_unique_actions(notices):
     a_tags.sort()
     # a_tags_filtered = [i for i in a_tags] # if any(j in i for j in ['record', 'system'])]
     return a_tags
-
-def xstr(s):
-    if s is None:
-        return ''
-    return str(s).lower()
-
-def filter_sorns(notices, matches):
-    """Filter notice results for system of record notices""" 
-    matches = ['system', 'record']
-    action_matches = []
-    abstract_matches = []
-    title_matches = []
-    no_matches = []
-    other_notices = []
-    none_notices = []
-
-    for notice in notices:
-        action = xstr(notice['action']).lower()
-        abstract = xstr(notice['abstract']).lower()
-        title = xstr(notice['title']).lower()
-        fields = [action, abstract, notice]
-
-        if action is None and abstract is None and title is None:
-            none_notices.append(notice)
-        
-        elif action is not None:
-            # if all(match in i['action'].lower() for match in matches):
-            if all(x in action for x in matches):
-                action_matches.append(notice)
-        
-        elif abstract is not None:
-            abstract_matches.append(notice)
-
-        elif title is not None:
-            title_matches.append(notice)
-
-        else:
-            other_notices.append(notice)
-    
-    return action_matches, abstract_matches, title_matches, no_matches, none_notices, other_notices
             
 
 def filter_sorn_operations(notices):
@@ -234,8 +234,6 @@ def filter_sorn_operations(notices):
     deleted_notices = []
     other_notices = []
     blank_notices = []
-
-    # TODO (Lee) - account for keywords 'system', 'systems', and 'records'
 
     # TODO (Lee) - account for blank and generic 'Notice' actions, ('systems of records' - plural ?)e.g.:
     # 'body_html_url': 'https://www.federalregister.gov/documents/full_text/html/2010/06/07/2010-13481.html',
@@ -295,7 +293,7 @@ def filter_sorn_operations(notices):
         'notice to delete a system of records.'
     ]
 
- # others/multiple actions:'notice of the rescission, establishment, and amendment of systems of records.',,
+ # others/multiple actions: 'notice of the rescission, establishment, and amendment of systems of records.',,
  # 'notice to reinstate a system of records.',
  # 'notice: publication of new and revised systems of records and standard disclosures.',
 
