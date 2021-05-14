@@ -315,16 +315,16 @@ def get_record_system_names(notices):
     """Extract record system name and number fields from sorn html"""
     import requests
     from bs4 import BeautifulSoup
+    
     system_names = []
     notices_named = []
     notices_namenulls = []
     
     for notice in notices:
         url = notice['body_html_url']
-        doc_number = notice['document_number']
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        name_paragraph = soup.find(text=re.compile('SYSTEM NAME', re.IGNORECASE))
+        name_paragraph = soup.find(text=re.compile('system name', re.IGNORECASE))
 
         if name_paragraph is not None:
             name_data = name_paragraph.findNext('p').text
@@ -339,6 +339,31 @@ def get_record_system_names(notices):
             continue
 
     return notices_named, notices_namenulls
+
+
+def search_notices_for_travel(notices):
+    """Searches sorn full text for travel keywords"""
+    import requests
+    from bs4 import BeautifulSoup
+    travel_sorns = []
+    nontravel_sorns = []
+
+    for notice in notices:
+        url = notice['body_html_url']
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        travel_keywords = soup.find(text = re.compile('travel', re.IGNORECASE))
+
+        if travel_keywords is not None:
+            travel_sorns.append(notice)
+        
+        elif travel_keywords is None:
+            nontravel_sorns.append(notice)
+
+        else:
+            continue
+    
+    return travel_sorns, nontravel_sorns
 
 
 def get_d2d_trip_report():
@@ -413,6 +438,8 @@ travel_docs = search_fedreg_docs(search_terms='record+system+travel',
 
 filtered_docs = filter_sorns(docs)
 filtered_travel_docs = filter_sorns(travel_docs)
+
+travel2_sorns = search_notices_for_travel(fs0[0])
 
 # uncomment to run
 # actions_set = get_unique_actions(notices)
