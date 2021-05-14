@@ -316,30 +316,46 @@ def get_record_system_names(notices):
     import requests
     from bs4 import BeautifulSoup
     system_names = []
+    nameheader_nulls = []
+    nameheaders = []
+    namedata_nulls = []
+    notices_completed = []
+    notices_withnulls = []
     for notice in notices:
-        print('notice')
+        # print('notice')
         url = notice['body_html_url']
+        doc_number = notice['document_number']
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        name_header = soup.find(text=re.compile('SYSTEM NAME AND NUMBER'))
+        namenum_header = soup.find(text=re.compile('SYSTEM NAME AND NUMBER'))
+        name_header = soup.find(text=re.compile('SYSTEM NAME'))
+        # h2_tag = soup.h2
         # h3_tag = soup.h3 #(string ='SYSTEM NAME AND NUMBER')
-        # TODO (Lee) include h2_tag also
-
         # (text=lambda t: t and any(x in t for x in ['Open', 'Closed']))
-        if name_header is not None:
+
+        if namenum_header is not None:
+            name_data = namenum_header.findNext('p').text
+            if name_data is not None:
+                # print(f'{doc_number} system is not none')
+                notice['system_name_num'] = name_data
+                notices_completed.append(notice)
+            else:
+                notices_withnulls.append(name_data)
+                # print('else 1')
+                continue
+        elif name_header is not None:
             name_data = name_header.findNext('p').text
             if name_data is not None:
-                print('dp is not none')
                 notice['system_name'] = name_data
-            else:
-                print('else 1')
-                continue
-        elif name_header is None:
-            print('else 2: sytem name is none')
+        
+        #elif namenum_header is None:
+            
+            # print(f'else 2: {doc_number} sytem name is none')
         else:
-            print('others')
+            # print('others')
+            notices_withnulls.append(notice)
             continue
-    return notices
+    return notices_completed, notices_withnulls
 
 
 def get_d2d_trip_report():
@@ -396,28 +412,24 @@ def get_regulation():
     data = response.json()
     return data
 
-
 # ----------
 
 concur_travel_parent_meta = get_concur_travel_parent_meta()
 
-docs = search_fedreg_docs(search_terms='system of records+travel', 
+docs = search_fedreg_docs(search_terms='record+system', 
                           doc_type='NOTICE', 
                           per_page=100, 
                           effective_start_date='1994-01-01',
                           effective_end_date='2020-12-31')
 
-sfr1 = search_fedreg_docs(search_terms='system of records+travel',
-                          doc_type='NOTICE',
-                          per_page=100,
-                          effective_start_date='2010-01-01',
-                          effective_end_date='2020-12-31')
+travel_docs = search_fedreg_docs(search_terms='record+system+travel',
+                                 doc_type='NOTICE',
+                                 per_page=100,
+                                 effective_start_date='1994-01-01',
+                                 effective_end_date='2020-12-31')
 
-fs1 = filter_sorns(sfr1)
+filtered_docs = filter_sorns(docs)
+filtered_travel_docs = filter_sorns(travel_docs)
 
+# uncomment to run
 # actions_set = get_unique_actions(notices)
-
-# ----------
-# TODO (Lee) - evaluate agency sites that describe sorns, e.g.:
-# https://home.treasury.gov/footer/privacy-act/system-of-records-notices-sorns
-# https://www.dhs.gov/system-records-notices-sorns
