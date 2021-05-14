@@ -312,50 +312,33 @@ def filter_sorn_operations(notices):
 
 
 def get_record_system_names(notices):
-    """Extract fields from sorn doc html"""
+    """Extract record system name and number fields from sorn html"""
     import requests
     from bs4 import BeautifulSoup
     system_names = []
-    nameheader_nulls = []
-    nameheaders = []
-    namedata_nulls = []
-    notices_completed = []
-    notices_withnulls = []
+    notices_named = []
+    notices_namenulls = []
+    
     for notice in notices:
-        # print('notice')
         url = notice['body_html_url']
         doc_number = notice['document_number']
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        namenum_header = soup.find(text=re.compile('SYSTEM NAME AND NUMBER'))
-        name_header = soup.find(text=re.compile('SYSTEM NAME'))
-        # h2_tag = soup.h2
-        # h3_tag = soup.h3 #(string ='SYSTEM NAME AND NUMBER')
-        # (text=lambda t: t and any(x in t for x in ['Open', 'Closed']))
+        name_paragraph = soup.find(text=re.compile('SYSTEM NAME', re.IGNORECASE))
 
-        if namenum_header is not None:
-            name_data = namenum_header.findNext('p').text
+        if name_paragraph is not None:
+            name_data = name_paragraph.findNext('p').text
             if name_data is not None:
-                # print(f'{doc_number} system is not none')
                 notice['system_name_num'] = name_data
-                notices_completed.append(notice)
+                notices_named.append(notice)
             else:
-                notices_withnulls.append(name_data)
-                # print('else 1')
+                notices_namenulls.append(name_data)
                 continue
-        elif name_header is not None:
-            name_data = name_header.findNext('p').text
-            if name_data is not None:
-                notice['system_name'] = name_data
-        
-        #elif namenum_header is None:
-            
-            # print(f'else 2: {doc_number} sytem name is none')
         else:
-            # print('others')
-            notices_withnulls.append(notice)
+            notices_namenulls.append(notice)
             continue
-    return notices_completed, notices_withnulls
+
+    return notices_named, notices_namenulls
 
 
 def get_d2d_trip_report():
