@@ -95,7 +95,7 @@ def get_concur_travel_parent_meta():
 # Travel Manager - Production   https://catalog.data.gov/dataset/travel-manager-production
 
 
-def get_fedreg_usg_agencies():
+def get_usg_agencies():
     """Get list of usgov agencies from federalregister.gov api"""
     import requests
     import os
@@ -171,12 +171,6 @@ def search_fedreg_docs(search_terms: list = None,
     return total_results
 
 
-def xstr(s):
-    if s is None:
-        return ''
-    return str(s).lower()
-
-
 def filter_sorns(notices):
     """Filter notice results for system of record notices""" 
     matches = ['system', 'record']
@@ -211,8 +205,15 @@ def filter_sorns(notices):
     
     return action_matches, abstract_matches, title_matches, no_matches, none_notices, other_notices
 
+
+def xstr(s):
+    if s is None:
+        return ''
+    return str(s).lower()
+
+
 def get_unique_actions(notices):
-    """Return list of notice 'action' tags from usgov federal register api response"""
+    """Return list of notice 'action' tags from us federal register api"""
     action_tags = []
     # [action_tags.append(i['action'].lower()) for i in notices if i['action'] is not None]
     for i in notices:
@@ -227,7 +228,7 @@ def get_unique_actions(notices):
     return a_tags
             
 
-def filter_sorn_operations(notices):
+def classify_sorn_operations(notices):
     """Categorize federal register api response based on update type"""
     created_notices = []
     modified_notices = []
@@ -239,7 +240,7 @@ def filter_sorn_operations(notices):
     # 'body_html_url': 'https://www.federalregister.gov/documents/full_text/html/2010/06/07/2010-13481.html',
     # 'https://www.federalregister.gov/documents/full_text/html/2010/07/26/2010-17934.html',
     # 'body_html_url': 'https://www.federalregister.gov/documents/full_text/html/2011/01/05/2010-33295.html',
-
+    
     # TODO (Lee) - keywords: ['new', 'add', 'establish', 'proposed', 'reinstate']
     created_indicators = [
         'notice of a new system of records.', 
@@ -311,8 +312,8 @@ def filter_sorn_operations(notices):
     return created_notices, modified_notices, deleted_notices, other_notices, blank_notices
 
 
-def get_record_system_names(notices):
-    """Extract record system name and number fields from sorn html"""
+def get_rec_sys_names(notices):
+    """Extract record system name and number fields from sorn full text"""
     import requests
     from bs4 import BeautifulSoup
     
@@ -341,8 +342,8 @@ def get_record_system_names(notices):
     return notices_named, notices_namenulls
 
 
-def search_notices_for_travel(notices):
-    """Searches sorn full text for travel keywords"""
+def classify_sorns_fulltext(notices):
+    """Classifies travel-related sorns through full text search"""
     import requests
     from bs4 import BeautifulSoup
     travel_sorns = []
