@@ -151,8 +151,11 @@ def search_fedreg_docs(search_terms: list = None,
     data = response.json()
     results = data['results']
     len_results = len(results)
+    print(f'len results: {len_results}')
     total_pages = data['total_pages']
+    print(f'total_pages: {total_pages}')
     count = data['count']
+    print(f'count: {count}')
     
     if 'next_page_url' in data:
         has_next_page = True
