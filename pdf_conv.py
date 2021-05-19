@@ -149,6 +149,7 @@ def search_fedreg_docs(search_terms: list = None,
     # endpoint: GET​/documents.{format}
     response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
     data = response.json()
+    print(data)
     results = data['results']
     len_results = len(results)
     print(f'len results: {len_results}')
@@ -163,6 +164,7 @@ def search_fedreg_docs(search_terms: list = None,
     while 'next_page_url' in data:
         total_results.extend(results)
         next_page_2 = data['next_page_url']
+        print(f'{next_page_2}')
         
         # call next page
         response = requests.get(next_page_2)
