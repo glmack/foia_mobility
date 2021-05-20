@@ -119,7 +119,7 @@ def search_fedreg_docs(search_terms: list = None,
                        # topic_tags: list[str] = None,
                        agencies: list = None
                       ) -> dict:
-    """Search documents in Federal Register via API GET request"""
+    """Search documents in Federal Register via API"""
  
     total_results = []
 
@@ -149,29 +149,17 @@ def search_fedreg_docs(search_terms: list = None,
     # endpoint: GET​/documents.{format}
     response = requests.get('https://federalregister.gov/api/v1/documents.json', params)
     data = response.json()
-    print(data)
     results = data['results']
     len_results = len(results)
-    print(f'len results: {len_results}')
-    total_pages = data['total_pages']
-    print(f'total_pages: {total_pages}')
+    total_pages = data['total_pages')
     count = data['count']
-    print(f'count: {count}')
-    
-    if 'next_page_url' in data:
-        has_next_page = True
+
+    total_results.extend(data['results'])
 
     while 'next_page_url' in data:
-        total_results.extend(results)
-        next_page_2 = data['next_page_url']
-        print(f'{next_page_2}')
-        
-        # call next page
-        response = requests.get(next_page_2)
+        response = requests.get(data['next_page_url'])
         data = response.json()
-    
-    results = data['results']
-    total_results.extend(results)
+        total_results.extend(data['results'])
 
     return total_results
 
