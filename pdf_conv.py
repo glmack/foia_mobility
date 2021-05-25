@@ -418,11 +418,26 @@ def get_regulation():
 
 concur_travel_parent_meta = get_concur_travel_parent_meta()
 
-docs = search_fedreg_docs(search_terms='record+system', 
+docs1 = search_fedreg_docs(search_terms='record+system', 
                           doc_type='NOTICE', 
                           per_page=100, 
                           effective_start_date='1994-01-01',
-                          effective_end_date='2020-12-31')
+                          effective_end_date='1999-12-31')
+
+docs2 = search_fedreg_docs(search_terms='record+system', 
+                          doc_type='NOTICE', 
+                          per_page=100, 
+                          effective_start_date='2000-01-01',
+                          effective_end_date='2009-12-31')
+
+docs3 = search_fedreg_docs(search_terms='record+system', 
+                          doc_type='NOTICE', 
+                          per_page=100, 
+                          effective_start_date='2010-01-01',
+                          effective_end_date='2021-12-31')
+
+docs = docs1 + docs2 + docs3
+docdf = pd.DataFrame(docs)
 
 travel_docs = search_fedreg_docs(search_terms='record+system+travel',
                                  doc_type='NOTICE',
