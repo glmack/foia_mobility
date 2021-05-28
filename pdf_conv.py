@@ -360,6 +360,17 @@ def classify_sorns_fulltext(notices):
     return travel_sorns, nontravel_sorns
 
 
+def get_govwide_sorns():
+    """Retrieve official list of US government-wide system of records notices"""
+    import requests
+    from bsf import BeautifulSoup
+    response = requests.get('https://www.fpc.gov/resources/SORNs/#container')
+    soup = BeautifulSoup.findall
+
+
+
+# TODO (Lee) categories: government-wide, system-wide, retired, general uses
+
 def get_d2d_trip_report():
     """Get 2/2020 trip report from d2d dashboard"""
     filepath = '/Users/lee/Documents/code/foia_mobility/TRip_Relocation.pdf'
