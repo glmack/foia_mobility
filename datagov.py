@@ -89,3 +89,6 @@ def get_concur_travel_parent_meta():
 # Master Data                   https://catalog.data.gov/dataset/master-data-b4599
 # End to End Travel             https://catalog.data.gov/dataset/end-to-end-travel
 # Travel Manager - Production   https://catalog.data.gov/dataset/travel-manager-production
+
+# ----------------
+concur_travel_parent_meta = get_concur_travel_parent_meta()
