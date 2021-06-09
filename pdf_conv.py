@@ -1,7 +1,7 @@
 # import tabula
 import requests
 # import matplotlib.pyplot as plt
-# import pandas as pd
+import pandas as pd
 
 
 def get_datagov_orgs():
@@ -151,7 +151,7 @@ def search_fedreg_docs(search_terms: list = None,
     data = response.json()
     results = data['results']
     len_results = len(results)
-    total_pages = data['total_pages')
+    total_pages = data['total_pages']
     count = data['count']
 
     total_results.extend(data['results'])
@@ -166,7 +166,9 @@ def search_fedreg_docs(search_terms: list = None,
 
 def filter_sorns(notices):
     """Filter notice results for system of record notices""" 
-    matches = ['system', 'record']
+    action_keywords = ['system', 'record']
+    title_keywords = ['system', 'record']
+    abstract_keywords = ['system', 'record', 'privacy']
     action_matches = []
     abstract_matches = []
     title_matches = []
@@ -184,11 +186,11 @@ def filter_sorns(notices):
             title = xstr(notice['title']).lower()
             # fields = [action, abstract, notice]
             
-            if all(x in action for x in matches):
+            if all(x in action for x in action_keywords):
                 action_matches.append(notice)
-            elif all(x in abstract for x in matches):
+            elif all(x in abstract for x in abstract_keywords):
                 abstract_matches.append(notice)
-            elif all(x in title for x in matches):
+            elif all(x in title for x in title_keywords):
                 title_matches.append(notice)
             else:
                 no_matches.append(notice)
@@ -448,7 +450,13 @@ docs3 = search_fedreg_docs(search_terms='record+system',
                           effective_end_date='2021-12-31')
 
 docs = docs1 + docs2 + docs3
-docdf = pd.DataFrame(docs)
+
+# uncomment to get dataframe of unfiltered docs
+# docdf = pd.DataFrame(docs)
+filtered_docs = filter_sorns(docs)
+filtered_matches = filtered_docs[1] + filtered_docs[2] + filtered_docs[3]
+matchdf = pd.DataFrame(filtered_matches)
+matchdf = matchdf.drop('subtype', axis=1)
 
 travel_docs = search_fedreg_docs(search_terms='record+system+travel',
                                  doc_type='NOTICE',
@@ -456,7 +464,6 @@ travel_docs = search_fedreg_docs(search_terms='record+system+travel',
                                  effective_start_date='1994-01-01',
                                  effective_end_date='2020-12-31')
 
-filtered_docs = filter_sorns(docs)
 filtered_travel_docs = filter_sorns(travel_docs)
 
 travel2_sorns = search_notices_for_travel(fs0[0])
