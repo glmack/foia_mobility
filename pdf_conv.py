@@ -1,7 +1,6 @@
-# import tabula
 import requests
-# import matplotlib.pyplot as plt
 import pandas as pd
+import re
 
 
 def get_datagov_orgs():
@@ -167,7 +166,7 @@ def search_fedreg_docs(search_terms: list = None,
 def filter_sorns(notices):
     """Filter notice results for system of record notices""" 
     action_keywords = ['system', 'record']
-    title_keywords = ['system', 'record']
+    title_keywords = ['system', 'record', 'privacy']
     abstract_keywords = ['system', 'record', 'privacy']
     action_matches = []
     abstract_matches = []
@@ -221,8 +220,39 @@ def get_unique_actions(notices):
     a_tags.sort()
     # a_tags_filtered = [i for i in a_tags] # if any(j in i for j in ['record', 'system'])]
     return a_tags
-            
 
+
+def get_rec_sys_names(notices):
+    """Extract record system name and number fields from sorn full text"""
+    import requests
+    from bs4 import BeautifulSoup
+    
+    system_names = []
+    notices_named = []
+    notices_namenulls = []
+    
+    for notice in notices:
+        url = notice['body_html_url']
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        name_paragraph = soup.find(text=re.compile('system name', re.IGNORECASE))
+
+        if name_paragraph is not None:
+            name_data = name_paragraph.findNext('p').text
+            if name_data is not None:
+                notice['system_name_num'] = name_data
+                notices_named.append(notice)
+            else:
+                notices_namenulls.append(name_data)
+                continue
+        else:
+            notices_namenulls.append(notice)
+            continue
+
+    return notices_named, notices_namenulls
+
+            
+# TODO (Lee) improve this through keyword-based approach
 def classify_sorn_operations(notices):
     """Categorize federal register api response based on update type"""
     created_notices = []
@@ -305,36 +335,6 @@ def classify_sorn_operations(notices):
         else:
             other_notices.append(i)
     return created_notices, modified_notices, deleted_notices, other_notices, blank_notices
-
-
-def get_rec_sys_names(notices):
-    """Extract record system name and number fields from sorn full text"""
-    import requests
-    from bs4 import BeautifulSoup
-    
-    system_names = []
-    notices_named = []
-    notices_namenulls = []
-    
-    for notice in notices:
-        url = notice['body_html_url']
-        response = requests.get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        name_paragraph = soup.find(text=re.compile('system name', re.IGNORECASE))
-
-        if name_paragraph is not None:
-            name_data = name_paragraph.findNext('p').text
-            if name_data is not None:
-                notice['system_name_num'] = name_data
-                notices_named.append(notice)
-            else:
-                notices_namenulls.append(name_data)
-                continue
-        else:
-            notices_namenulls.append(notice)
-            continue
-
-    return notices_named, notices_namenulls
 
 
 def classify_sorns_fulltext(notices):
