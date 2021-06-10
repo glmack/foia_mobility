@@ -1,9 +1,13 @@
 def get_govwide_sorns():
-    """Retrieve official list of US government-wide system of records notices"""
+    """Retrieve US government-wide system of records notices from fpc.gov"""
     import requests
     from bsf import BeautifulSoup
     response = requests.get('https://www.fpc.gov/resources/SORNs/#container')
-    soup = BeautifulSoup.findall
+    soup = BeautifulSoup(html_doc, 'html.parser')
+    for link in soup.findall('b-e1'):
+        print(soup.class)
+
+# id: b-e1 class: usa-accordion_content
 
 
 # TODO (Lee) categories: government-wide, system-wide, retired, general uses
