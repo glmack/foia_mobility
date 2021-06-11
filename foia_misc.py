@@ -3,9 +3,15 @@ def get_govwide_sorns():
     import requests
     from bsf import BeautifulSoup
     response = requests.get('https://www.fpc.gov/resources/SORNs/#container')
-    soup = BeautifulSoup(html_doc, 'html.parser')
-    for link in soup.findall('b-e1'):
-        print(soup.class)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    soup.find_all('div', class_ = 'tabcontent')
+    #tabcontent.div.txt
+
+    for i in tabcontent.find_all('button'):
+     ...:     print(i.text)
+     ...: 
+         # DOL/GOVT-1 Office of Workers' Compensation Programs, Federal Employees' Compensation Act File
+         # DOL/GOVT-2 Job Corps Student Records
 
 # id: b-e1 class: usa-accordion_content
 
