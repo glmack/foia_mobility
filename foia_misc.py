@@ -7,9 +7,10 @@ def get_govwide_sorns():
     soup.find_all('div', class_ = 'tabcontent')
     #tabcontent.div.txt
 
-    for i in tabcontent.find_all('button'):
-     ...:     print(i.text)
-     ...: 
+    for i in tabcontent:
+        title = ul.button.text
+        pub_date_doc = i.div.a.text
+
          # DOL/GOVT-1 Office of Workers' Compensation Programs, Federal Employees' Compensation Act File
          # DOL/GOVT-2 Job Corps Student Records
 
