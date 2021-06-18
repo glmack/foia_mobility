@@ -1,20 +1,26 @@
 def get_govwide_sorns():
     """Retrieve US government-wide system of records notices from fpc.gov"""
     import requests
-    from bsf import BeautifulSoup
+    from bs4 import BeautifulSoup
     response = requests.get('https://www.fpc.gov/resources/SORNs/#container')
     soup = BeautifulSoup(response.content, 'html.parser')
-    soup.find_all('div', class_ = 'tabcontent')
-    #tabcontent.div.txt
-
-    for i in tabcontent:
-        title = ul.button.text
-        pub_date_doc = i.div.a.text
-
-         # DOL/GOVT-1 Office of Workers' Compensation Programs, Federal Employees' Compensation Act File
-         # DOL/GOVT-2 Job Corps Student Records
-
-# id: b-e1 class: usa-accordion_content
+    agency_tags = soup.find_all('div', class_ = 'tabcontent')
+    titles = []
+    pub_date_docs = []
+    for agency in agency_tags:
+        try:
+            dataset_tags = agency.find_all('button')
+            for dataset in dataset_tags:
+                if dataset.ul.button:
+                    title = dataset.ul.button.text
+                    titles.append(title)
+                if pub_date_doc:
+                    pub_date_doc = dataset.div.a.text
+                    pub_date_docs.append(pub_date_doc)
+        except:
+            pass
+    
+    return titles, pub_date_docs
 
 
 # TODO (Lee) categories: government-wide, system-wide, retired, general uses
