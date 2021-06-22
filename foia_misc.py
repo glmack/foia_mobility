@@ -4,23 +4,21 @@ def get_govwide_sorns():
     from bs4 import BeautifulSoup
     response = requests.get('https://www.fpc.gov/resources/SORNs/#container')
     soup = BeautifulSoup(response.content, 'html.parser')
-    agency_tags = soup.find_all('div', class_ = 'tabcontent')
-    titles = []
+    agency_sections = soup.find_all('div', class_ = 'tabcontent')
+    datasets = []
     pub_date_docs = []
-    for agency in agency_tags:
-        try:
-            dataset_tags = agency.find_all('button')
-            for dataset in dataset_tags:
-                if dataset.ul.button:
-                    title = dataset.ul.button.text
-                    titles.append(title)
-                if pub_date_doc:
-                    pub_date_doc = dataset.div.a.text
-                    pub_date_docs.append(pub_date_doc)
-        except:
-            pass
+    for agency_section in agency_sections:
+        datasets.append(agency_section.find('h2'))
+        datasets.append(agency_section.find_all(ul.button.text)
+        datasets.append(agency_section.find_all(div.a.text)
+            #         titles.append(title)
+            #     if pub_date_doc:
+            #         pub_date_doc = dataset.div.a.text
+            #         pub_date_docs.append(pub_date_doc)
+        # except:
+        #     pass
     
-    return titles, pub_date_docs
+    return datasets
 
 
 # TODO (Lee) categories: government-wide, system-wide, retired, general uses
