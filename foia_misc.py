@@ -6,20 +6,14 @@ def get_govwide_sorns():
     soup = BeautifulSoup(response.content, 'html.parser')
     agency_sections = soup.find_all('div', class_ = 'tabcontent')
     datasets = []
+    ul_docs = []
     pub_date_docs = []
-    for agency_section in agency_sections:
-        datasets.append(agency_section.find('h2'))
-        datasets.append(agency_section.find_all(ul.button.text)
-        datasets.append(agency_section.find_all(div.a.text)
-            #         titles.append(title)
-            #     if pub_date_doc:
-            #         pub_date_doc = dataset.div.a.text
-            #         pub_date_docs.append(pub_date_doc)
-        # except:
-        #     pass
-    
+    for ag in ags:
+        buttons = ag.find_all('button')
+        for button in buttons:
+            datasets.append(button.string)
+        
     return datasets
-
 
 # TODO (Lee) categories: government-wide, system-wide, retired, general uses
 
