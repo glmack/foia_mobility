@@ -4,27 +4,28 @@ def get_govwide_sorns():
     from bs4 import BeautifulSoup
     response = requests.get('https://www.fpc.gov/resources/SORNs/#container')
     soup = BeautifulSoup(response.content, 'html.parser')
-    agency_tags = soup.find_all('div', class_ = 'tabcontent')
-    datasets = {}
-    # buttons = container.find_all('button', class_="usa-accordion__button text-primary-darker")
-    # dates = container.find_all('a')
-    for agency_tag in agency_tags:
-        if agency_tag is not None:
-            try:
-                dataset_tags = agency_tag.findChildren('button')
-            except:
-                pass
-        else:
-            pass
-        for dataset_tag in dataset_tags:
-            if dataset_tag is not None:
-                try:
-                    datasets.update(dataset_tag)
-                    datasets['title'] = dataset_tag.text
-                except:
-                    pass
-            else:
-                pass
+    agency_el = soup.find_all('div', class_ = 'tabcontent')
+    main_el = soup.find('section', id = 'main-content')
+    dataset_els = main_el.find_all('button', class_ = 'usa-accordion__button text-primary-darker')
+    for dataset_el in dataset_els:
+        title = dataset_el.text
+        print(title)
+
+        
+    
+# list of datasets = ul class = usa-accordion usa-accordion--bordered
+# dataset = li
+# title = usa-accordion__button text-primary-darker # note double underscore
+
+        # for dataset_tag in dataset_tags:
+        #     if dataset_tag is not None:
+        #         try:
+        #             datasets.update(dataset_tag)
+        #             datasets['title'] = dataset_tag.text
+        #         except:
+        #             pass
+        #     else:
+        #         pass
         # date_tag = agency_tag.findChildren('a')
         # datasets['title'].append(title_tag)
         # datasets['date'].append(date_tag)
