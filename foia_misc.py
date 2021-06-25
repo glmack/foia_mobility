@@ -4,20 +4,30 @@ def get_govwide_sorns():
     from bs4 import BeautifulSoup
     response = requests.get('https://www.fpc.gov/resources/SORNs/#container')
     soup = BeautifulSoup(response.content, 'html.parser')
-    agency_sections = soup.find_all('div', class_ = 'tabcontent')
+    agency_tags = soup.find_all('div', class_ = 'tabcontent')
     datasets = {}
     # buttons = container.find_all('button', class_="usa-accordion__button text-primary-darker")
     # dates = container.find_all('a')
-    # for ag in ags:
-    #    button_tags = ag.find_all('button')
-    #     date_tags = ag.find_all('a')
-        # for date in dates:
-        #     date = date.text
-    for date_tag, button_tag in zip(dates, buttons):
-        title = button_tag.string
-        date = date_tag.string
-        datasets['title'] = title
-        datasets['date'] = date
+    for agency_tag in agency_tags:
+        if agency_tag is not None:
+            try:
+                dataset_tags = agency_tag.findChildren('button')
+            except:
+                pass
+        else:
+            pass
+        for dataset_tag in dataset_tags:
+            if dataset_tag is not None:
+                try:
+                    datasets.update(dataset_tag)
+                    datasets['title'] = dataset_tag.text
+                except:
+                    pass
+            else:
+                pass
+        # date_tag = agency_tag.findChildren('a')
+        # datasets['title'].append(title_tag)
+        # datasets['date'].append(date_tag)
         # datasets['agency'] = 
         
     return datasets
