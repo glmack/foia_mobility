@@ -7,31 +7,20 @@ def get_govwide_sorns():
     agency_el = soup.find_all('div', class_ = 'tabcontent')
     main_el = soup.find('section', id = 'main-content')
     dataset_els = main_el.find_all('button', class_ = 'usa-accordion__button text-primary-darker')
+    dsets = []
+    data_row = {}
     for dataset_el in dataset_els:
-        title = dataset_el.text
-        print(title)
+        title_tag = dataset_el
+        agency_tag = title_tag.find_previous('h2')
+        date_tag = title_tag.findNext('a')
+        data_row = {'title': title_tag.text, 
+                    'date_created': date_tag.text,
+                    'agency': agency_tag.text}
+        dsets.append(data_row)
+        # date = title_tag.findNext('a').text
+        # print(date)
 
-        
-    
-# list of datasets = ul class = usa-accordion usa-accordion--bordered
-# dataset = li
-# title = usa-accordion__button text-primary-darker # note double underscore
-
-        # for dataset_tag in dataset_tags:
-        #     if dataset_tag is not None:
-        #         try:
-        #             datasets.update(dataset_tag)
-        #             datasets['title'] = dataset_tag.text
-        #         except:
-        #             pass
-        #     else:
-        #         pass
-        # date_tag = agency_tag.findChildren('a')
-        # datasets['title'].append(title_tag)
-        # datasets['date'].append(date_tag)
-        # datasets['agency'] = 
-        
-    return datasets
+    return dsets
 
 # TODO (Lee) categories: government-wide, system-wide, retired, general uses
 
