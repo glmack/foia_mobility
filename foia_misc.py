@@ -7,22 +7,21 @@ def get_govwide_sorns():
     agency_el = soup.find_all('div', class_ = 'tabcontent')
     main_el = soup.find('section', id = 'main-content')
     dataset_els = main_el.find_all('button', class_ = 'usa-accordion__button text-primary-darker')
-    dsets = []
+    datasets = []
     data_row = {}
     for dataset_el in dataset_els:
-        title_tag = dataset_el
-        agency_tag = title_tag.find_previous('h2')
-        date_tag = title_tag.findNext('a')
-        data_row = {'title': title_tag.text, 
-                    'date_created': date_tag.text,
-                    'agency': agency_tag.text}
-        dsets.append(data_row)
-        # date = title_tag.findNext('a').text
-        # print(date)
+        title_el = dataset_el
+        agency_el = title_el.find_previous('h2')
+        date_el = title_el.findNext('a')
+        data_row = {'title': title_el.text.strip(), 
+                    'date_created': date_el.text,
+                    'agency': agency_el.text,
+                   }
+        datasets.append(data_row)
 
-    return dsets
+    return datasets
 
-# TODO (Lee) categories: government-wide, system-wide, retired, general uses
+# TODO (Lee) record systems categories: government-wide, system-wide, retired, general uses
 
 def get_d2d_trip_report():
     """Get 2/2020 trip report from d2d dashboard"""
