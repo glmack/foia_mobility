@@ -34,7 +34,7 @@ def search_fedreg_docs(search_terms: list = None,
     params = {'fields[]': [
         'abstract', 'action', 'agencies', 'agency_names', 'body_html_url', 
         'citation', 'document_number', 'effective_on', 'end_page',
-        'html_url','publication_date', 'start_page', 'title', 'subtype',
+        'html_url','publication_date', 'start_page', 'title',
         'toc_doc', 'toc_subject', 'topics', 'type', 'volume'
         ],
         'conditions[term]': search_terms,
@@ -292,9 +292,6 @@ docs3 = search_fedreg_docs(search_terms='record+system',
                           effective_end_date='2021-12-31')
 
 docs = docs1 + docs2 + docs3
-
-# uncomment to get dataframe of unfiltered docs
-# docdf = pd.DataFrame(docs)
 filtered_docs = filter_sorns(docs)
 filtered_matches = filtered_docs[1] + filtered_docs[2] + filtered_docs[3]
 matchdf = pd.DataFrame(filtered_matches)
