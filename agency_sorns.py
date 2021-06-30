@@ -1,9 +1,10 @@
+from numpy.core.fromnumeric import _diagonal_dispatcher
 import requests
 import pandas as pd
 import re
 
-def get_state_sorns():
-    """Scrape list of record systems from Department of State website"""
+def get_dos_sorns():
+    """Get list of Department of State record systems from website"""
     import requests
     url = 'https://www.state.gov/system-of-records-notices-privacy-office/'
     response = requests.get(url)
@@ -12,26 +13,66 @@ def get_state_sorns():
     dataset_els = body.find_all('tr')
     datasets = []
     dataset_row = {}
-    for da
     for dataset_idx, dataset_el in enumerate(dataset_els):
-        if idx == 0:
-            continue
-        elif idx != 0:
-            columns = dataset_el.find_all('td')
-            column_count = 0
-            for col_idx, col_el in enumerate(columns):
+        print(f'dataset_idx: {dataset_idx}')
+        if dataset_idx == 0:
+            pass
+        elif dataset_idx != 0:
+            column_els = dataset_el.find_all('td')
+            for col_idx, col_el in enumerate(column_els):
+                print(f'col_idx: {col_idx}')
                 if col_idx == 0:
-                    dataset_row: {['name'] = col.text}
-                    print(column.text)
+                    dataset_row['name'] = col_el.text
+                    print(f'col_el text: {col_el.text}')
                 elif col_idx == 1:
-                    continue
+                    pass
                 elif col_idx == 2:
-                    dataset_row['sorn_code'] = column.text}
-                    print(column.text)
-                    dataset_row['sorn_url'] = column.href
+                    dataset_row['sorn_code'] = col_el.text.strip()
+                    print(f'col_el text: {col_el.text.strip()}')
+                    try:
+                        print(f'col_el url: {col_el.a.href}')
+                    except:
+                        pass
                 else:
-                    continue
+                    pass
+                datasets.append(dataset_row)
         else:
             continue
-                datasets.append(dataset_row)
     return datasets
+
+
+def get_ded_sorns():
+    """Get list of Department of Education record systems from website"""
+
+def get_dod_sorns():
+    """Get list of Department of Education record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
