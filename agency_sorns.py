@@ -22,7 +22,7 @@ def get_dos_sorns():
             for col_idx, col_el in enumerate(column_els):
                 print(f'col_idx: {col_idx}')
                 if col_idx == 0:
-                    dataset_row['name'] = col_el.text
+                    dataset_row = {'name': col_el.text}
                     print(f'col_el text: {col_el.text}')
                 elif col_idx == 1:
                     pass
@@ -30,14 +30,16 @@ def get_dos_sorns():
                     dataset_row['sorn_code'] = col_el.text.strip()
                     print(f'col_el text: {col_el.text.strip()}')
                     try:
-                        print(f'col_el url: {col_el.a.href}')
+                        doc_url = col_el.a['href']
+                        dataset_row['doc_url'] = col_el.a['href']
+                        print(f'col_el url: {doc_url}')
                     except:
                         pass
                 else:
                     pass
-                datasets.append(dataset_row)
+            datasets.append(dataset_row)
         else:
-            continue
+            pass
     return datasets
 
 
