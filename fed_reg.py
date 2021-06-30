@@ -295,7 +295,7 @@ docs = docs1 + docs2 + docs3
 filtered_docs = filter_sorns(docs)
 filtered_matches = filtered_docs[1] + filtered_docs[2] + filtered_docs[3]
 matchdf = pd.DataFrame(filtered_matches)
-matchdf = matchdf.drop('subtype', axis=1)
+# matchdf = matchdf.drop('subtype', axis=1)
 
 travel_docs = search_fedreg_docs(search_terms='record+system+travel',
                                  doc_type='NOTICE',
@@ -305,7 +305,7 @@ travel_docs = search_fedreg_docs(search_terms='record+system+travel',
 
 filtered_travel_docs = filter_sorns(travel_docs)
 
-travel2_sorns = search_notices_for_travel(fs0[0])
+# travel2_sorns = search_notices_for_travel(fs0[0])
 
 # uncomment to run
 # actions_set = get_unique_actions(notices)
