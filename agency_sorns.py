@@ -23,16 +23,22 @@ def get_dos_sorns():
             for col_idx, col_el in enumerate(column_els):
                 if col_idx == 0:
                     # TODO - Lee: split rec_sys_name from recsys_code
-                    name_and_code = col_el.text.split()
-                    name = name_and_code[0].strip()
-                    name_code = name_and_code[1].strip()
+                    name_and_code = col_el.text.split(',')
+                    try:
+                        name = name_and_code[0].strip()
+                    except:
+                        name = ''
+                    try:
+                        name_code = name_and_code[1].strip()
+                    except:
+                        name_code = ''
                     dataset_row = {'name': name,
                                    'name_code': name_code
-                                  }
+                                      }
                 elif col_idx == 1:
                     pass
                 elif col_idx == 2:
-                    dataset_row['sorn_code'] = col_el.text.strip())
+                    dataset_row['sorn_code'] = col_el.text.strip()
                     try:
                         doc_url = col_el.a['href']
                         dataset_row['doc_url'] = doc_url
