@@ -11,46 +11,46 @@ def get_dos_sorns():
     url = 'https://www.state.gov/system-of-records-notices-privacy-office/'
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
-    datasets = []
-    table_row = {}
+    rec_systems = []
+    rec_sys = {}
 
     body = soup.find('tbody')
-    table_row_els = body.find_all('tr')
-    for table_row_idx, table_row_el in enumerate(table_row_els):
-        if table_row_idx == 0:
+    tr_els = body.find_all('tr')
+    for tr_idx, tr_el in enumerate(tr_els):
+        if tr_idx == 0: # header row of table
             pass
-        elif table_row_idx != 0:
-            table_data_els = table_row_el.find_all('td')
-            for table_data_idx, table_data_el in enumerate(table_data_els):
-                if table_data_idx == 0:
+        else:
+            td_els = tr_el.find_all('td')
+            for td_idx, td_el in enumerate(td_els):
+                if td_idx == 0:
                     # TODO - Lee: split rec_sys_name from recsys_code
-                    name_and_code = table_data_el.text.split(',')
+                    data = td_el.text.split(',')
                     try:
-                        name = name_and_code[0].strip()
+                        name = data[0].strip()
                     except:
                         name = ''
                     try:
-                        name_code = name_and_code[1].strip()
+                        name_code = data[1].strip()
                     except:
                         name_code = ''
-                    table_row = {'name': name,
+                    rec_sys = {'name': name,
                                    'name_code': name_code
                                       }
-                elif col_idx == 1:
+                elif td_idx == 1:
                     pass
-                elif col_idx == 2:
-                    table_row['sorn_code'] = col_el.text.strip()
+
+                elif td_idx == 2:
+                    rec_sys['sorn_code'] = td_el.text.strip()
+                    # TODO Lee - not getting url correctly
                     try:
-                        doc_url = table_data_string['href']
-                        table_row['doc_url'] = doc_url
+                        doc_url = td_el['href']
+                        rec_sys['doc_url'] = doc_url
                     except:
                         pass
                 else:
                     pass
-            datasets.append(table_row)
-        else:
-            pass
-    return datasets
+            rec_systems.append(rec_sys)
+    return rec_systems
 
 
 def get_treasury_sorns():
@@ -61,51 +61,58 @@ def get_treasury_sorns():
     soup = BeautifulSoup(response.content, 'html.parser')
     body = soup.find('section')
     table_els = body.find_all('table')
-    datasets = [] # TODO Lee check indent?
+    rec_systems = []
+    rec_sys = {}
 
+    for table in table_els:
+        tr_els = body.find_all('tr')
+        for tr_idx, tr_el in enumerate(tr_els):
 
-    for table_el in table_els:
-        dataset_row = {} # TODO Lee check indent
-        dataset_els = body.find_all('tr')
-        table_el.text
-
-        for dataset_idx, dataset_el in enumerate(dataset_els):
-            if dataset_idx == 0:
+            if tr_idx == 0:
                 pass
-            elif dataset_idx != 0:
-                table_data_els = dataset_el.find_all('td')
-                for table_data_idx, table_data_el in enumerate(table_data_els):
-                    table_data_string = table_data_el.a.text.split('-')
-                    if table_data_idx == 0:
-                        # TODO - Lee: split rec_sys_name from recsys_code
+            elif tr_idx != 0:
+                td_els = tr_el.find_all('td')
+                for td_idx, td_el in enumerate(td_els):
+                    try:
+                        data = td_el.a.text.split('-')
+                    except:
+                        data = ''
+
+                    if tr_idx == 0:
                         try:
-                            name_code = table_data_string[0].strip()
+                            name_code = data[0].strip()
                         except:
                             name_code = ''
                             pass
-                        dataset_row = {'name_code': name_code
+                        rec_sys = {'name_code': name_code
                                       }
-                    elif col_idx == 1:
+                    elif td_idx == 1:
                         try:
-                            name = table_data_string[1].strip()
+                            name = data[1].strip()
                         except:
                             name = ''
                             pass
-                        dataset_row['name'] = name
-                    elif col_idx == 2:
-                        dataset_row['sorn_code'] = table_data_string[2].strip()
+                        rec_sys['name'] = name
+                    
+                    elif td_idx == 2:
                         try:
-                            doc_url = col_el.a['href']
-                            dataset_row['doc_url'] = doc_url
-                        except:
-                            doc_url = ''
-                            pass
+                            rec_sys['sorn_code'] = data[2].strip()
+                        except: sorn_code = ''
+                        pass
+
                     else:
                         pass
-                datasets.append(dataset_row)
+                try:
+                    doc_url = tr_el.a['href']
+                    rec_sys['doc_url'] = doc_url
+                except:
+                    doc_url = ''
+                pass
+                rec_systems.append(rec_sys)
+
             else:
                 pass
-    return datasets
+    return rec_systems
 
 
 def get_ded_sorns():
