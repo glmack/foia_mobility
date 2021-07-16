@@ -67,51 +67,47 @@ def get_treasury_sorns():
     for table in table_els:
         tr_els = body.find_all('tr')
         for tr_idx, tr_el in enumerate(tr_els):
-
             if tr_idx == 0:
                 pass
-            elif tr_idx != 0:
+            else:
                 td_els = tr_el.find_all('td')
                 for td_idx, td_el in enumerate(td_els):
                     try:
                         data = td_el.a.text.split('-')
                     except:
                         data = ''
+                        if tr_idx == 0:
+                            try:
+                                doc_url = td_el.a['href']
+                            except:
+                                doc_url = ''
+                            rec_sys = {'doc_url': doc_url}
+                            print(f'doc_url: {doc_url}')
+                            try:
+                                name_code = data[0].strip()
+                            except:
+                                name_code = ''
+                                pass
+                            rec_sys['name_code'] = name_code
+                        elif td_idx == 1:
+                            try:
+                                name = data[1].strip()
+                            except:
+                                name = ''
+                                pass
+                            rec_sys['name'] = name
+                        
+                        elif td_idx == 2:
+                            try:
+                                sorn_code = data[2].strip()
+                            except:
+                                sorn_code = ''
+                                pass
+                            rec_sys['sorn_code'] = sorn_code
 
-                    if tr_idx == 0:
-                        try:
-                            name_code = data[0].strip()
-                        except:
-                            name_code = ''
+                        else:
                             pass
-                        rec_sys = {'name_code': name_code
-                                      }
-                    elif td_idx == 1:
-                        try:
-                            name = data[1].strip()
-                        except:
-                            name = ''
-                            pass
-                        rec_sys['name'] = name
-                    
-                    elif td_idx == 2:
-                        try:
-                            rec_sys['sorn_code'] = data[2].strip()
-                        except: sorn_code = ''
-                        pass
-
-                    else:
-                        pass
-                try:
-                    doc_url = tr_el.a['href']
-                    rec_sys['doc_url'] = doc_url
-                except:
-                    doc_url = ''
-                pass
                 rec_systems.append(rec_sys)
-
-            else:
-                pass
     return rec_systems
 
 
