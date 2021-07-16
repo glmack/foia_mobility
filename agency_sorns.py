@@ -3,7 +3,8 @@ import requests
 import pandas as pd
 import re
 
-# [dos, gsa, ded, dod, ]
+# TODO Lee refactor/abstract to class structure [dos, gsa, ded, dod, ]
+# TODO Lee - add 'org_scope' field with name of agency/sub-agency 
 
 def get_dos_sorns():
     """Get list of record systems of US Department of State"""
@@ -72,87 +73,200 @@ def get_treasury_sorns():
             else:
                 td_els = tr_el.find_all('td')
                 for td_idx, td_el in enumerate(td_els):
-                    try:
-                        data = td_el.a.text.split('-')
-                    except:
-                        data = ''
-                        if tr_idx == 0:
-                            try:
-                                doc_url = td_el.a['href']
-                            except:
-                                doc_url = ''
-                            rec_sys = {'doc_url': doc_url}
-                            print(f'doc_url: {doc_url}')
-                            try:
-                                name_code = data[0].strip()
-                            except:
-                                name_code = ''
-                                pass
-                            rec_sys['name_code'] = name_code
-                        elif td_idx == 1:
-                            try:
-                                name = data[1].strip()
-                            except:
-                                name = ''
-                                pass
-                            rec_sys['name'] = name
-                        
-                        elif td_idx == 2:
-                            try:
-                                sorn_code = data[2].strip()
-                            except:
-                                sorn_code = ''
-                                pass
-                            rec_sys['sorn_code'] = sorn_code
-
-                        else:
+                    if td_idx == 0:
+                        try:
+                            data = td_el.a.text.split('-')
+                        except:
+                            data = ''
                             pass
+                        try:
+                            doc_url = td_el.a['href']
+                        except:
+                            doc_url = ''
+                            pass
+                        try:
+                            name_code = data[0].strip()
+                        except:
+                            name_code = ''
+                            pass
+                        try:
+                            name = data[1].strip()
+                        except:
+                            name = ''
+                            pass
+                        try:
+                            sorn_code = data[2].strip()
+                        except:
+                            sorn_code = ''
+                            pass
+                        rec_sys = {'name': name,
+                                'name_code': name_code,
+                                'sorn_code': sorn_code,
+                                'doc_url': doc_url}
+                    elif td_idx == 1:
+                        pass
+                    elif td_idx == 2:
+                        pass
+                    else:
+                        pass
                 rec_systems.append(rec_sys)
+    return rec_systems
+
+
+def get_commerce_sorns():
+    """Get list of record systems of US Department of Commerce"""
+    import requests
+    url = 'https://www.osec.doc.gov/opog/privacyact/PrivacyAct_SORNs.html#Department'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
+
+    accordions = soup.find_all('div', class_ ='AccordionPanelContent')
+    for accordion in accordions:
+        try:
+            name = accordion.ul.li.text
+        except:
+            name = ''
+            pass
+        try:
+            doc_url = accordion.ul.li.a['href']
+        except:
+            doc_url = ''
+            pass
+        try:
+            name_code = accordion.ul.li.a['title']
+        except:
+            name_code = ''
+        rec_sys = {'name': name,
+                   'url': doc_url,
+                   'name_code': name_code}
+        rec_systems.append(rec_sys)
+
+    # tr_els = body.find_all('tr')
+    # for tr_idx, tr_el in enumerate(tr_els):
+        # if tr_idx == 0: # header row of table
+        #     pass
+        # else:
+        #     td_els = tr_el.find_all('td')
+    
+
+        # for td_idx, td_el in enumerate(td_els):
+        #     if td_idx == 0:
+        #         # TODO - Lee: split rec_sys_name from recsys_code
+        #         data = td_el.text.split(',')
+        #         try:
+        #             name = data[0].strip()
+        #         except:
+        #             name = ''
+        #         try:
+        #             name_code = data[1].strip()
+        #         except:
+        #             name_code = ''
+        #         rec_sys = {'name': name,
+        #                         'name_code': name_code
+        #                             }
+        #     elif td_idx == 1:
+        #         pass
+
+        #         elif td_idx == 2:
+        #             rec_sys['sorn_code'] = td_el.text.strip()
+        #             # TODO Lee - not getting url correctly
+        #             try:
+        #                 doc_url = td_el.a['href']
+        #                 rec_sys['doc_url'] = doc_url
+        #             except:
+        #                 pass
+        #         else:
+        #             pass
+        #     rec_systems.append(rec_sys)
     return rec_systems
 
 
 def get_ded_sorns():
     """Get list of record systems of US Department of Education"""
+    import requests
     url = 'https://www2.ed.gov/notices/ed-pia.html'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
 
 
 def get_dod_sorns():
     """Get list of record systems of US Department of Education"""
     url = 'https://dpcld.defense.gov/Privacy/SORNsIndex/'
-
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
 
 def get_usda_sorns():
     """Get list of record systems of US Department of Agriculture"""
     url = 'https://www.ocio.usda.gov/policy-directives-records-forms/records-management/system-records'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
+
+def get_   _sorns():
+    """Get list of ___ record systems from website"""
+    import requests
+    url = 
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
 
 
 def get_   _sorns():
     """Get list of ___ record systems from website"""
-    url = 'https://www.usa.gov/federal-agencies/u-s-department-of-commerce'
-
-def get_   _sorns():
-    """Get list of ___ record systems from website"""
-
-
-def get_   _sorns():
-    """Get list of ___ record systems from website"""
+    import requests
+    url = 
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
 
 
 def get_   _sorns():
     """Get list of ___ record systems from website"""
+    import requests
+    url = 
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
 
 
 def get_   _sorns():
     """Get list of ___ record systems from website"""
+    import requests
+    url = 
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
 
 
 def get_   _sorns():
     """Get list of ___ record systems from website"""
+    import requests
+    url = 
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
 
 
 def get_   _sorns():
     """Get list of ___ record systems from website"""
-
+    import requests
+    url = 
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    rec_systems = []
+    rec_sys = {}
 
 # ------------------- non-executive agencies
 def get_gsa_sorns():
