@@ -43,7 +43,7 @@ def get_dos_sorns():
                     rec_sys['sorn_code'] = td_el.text.strip()
                     # TODO Lee - not getting url correctly
                     try:
-                        doc_url = td_el['href']
+                        doc_url = td_el.a['href']
                         rec_sys['doc_url'] = doc_url
                     except:
                         pass
