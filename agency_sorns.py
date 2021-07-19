@@ -115,6 +115,7 @@ def get_treasury_sorns():
 
 def get_commerce_sorns():
     """Get list of record systems of US Department of Commerce"""
+    # TODO Lee - need to get doc_url by getting additional link to agency sorn page
     import requests
     url = 'https://www.osec.doc.gov/opog/privacyact/PrivacyAct_SORNs.html#Department'
     response = requests.get(url)
@@ -124,62 +125,24 @@ def get_commerce_sorns():
 
     accordions = soup.find_all('div', class_ ='AccordionPanelContent')
     for accordion in accordions:
-        try:
-            name = accordion.ul.li.text
-        except:
-            name = ''
+        name = accordion.li.text
+        list_tag = accordion.find('li')
+        if name:
+            rec_sys = {'name': name}
+        else:
+            rec_sys = {'name': ''}
+        if list_tag:
+            if list_tag.a.has_attr('title'):
+                rec_sys['name_code'] = list_tag.a['title']
+            else:
+                rec_sys['name_code'] = ''
+            if list_tag.a.has_attr('href'):
+                rec_sys['agency_doc_url'] = list_tag.a['href']
+            else:
+                rec_sys['agency_doc_url'] = ''
+        else:
             pass
-        try:
-            doc_url = accordion.ul.li.a['href']
-        except:
-            doc_url = ''
-            pass
-        try:
-            name_code = accordion.ul.li.a['title']
-        except:
-            name_code = ''
-        rec_sys = {'name': name,
-                   'url': doc_url,
-                   'name_code': name_code}
         rec_systems.append(rec_sys)
-
-    # tr_els = body.find_all('tr')
-    # for tr_idx, tr_el in enumerate(tr_els):
-        # if tr_idx == 0: # header row of table
-        #     pass
-        # else:
-        #     td_els = tr_el.find_all('td')
-    
-
-        # for td_idx, td_el in enumerate(td_els):
-        #     if td_idx == 0:
-        #         # TODO - Lee: split rec_sys_name from recsys_code
-        #         data = td_el.text.split(',')
-        #         try:
-        #             name = data[0].strip()
-        #         except:
-        #             name = ''
-        #         try:
-        #             name_code = data[1].strip()
-        #         except:
-        #             name_code = ''
-        #         rec_sys = {'name': name,
-        #                         'name_code': name_code
-        #                             }
-        #     elif td_idx == 1:
-        #         pass
-
-        #         elif td_idx == 2:
-        #             rec_sys['sorn_code'] = td_el.text.strip()
-        #             # TODO Lee - not getting url correctly
-        #             try:
-        #                 doc_url = td_el.a['href']
-        #                 rec_sys['doc_url'] = doc_url
-        #             except:
-        #                 pass
-        #         else:
-        #             pass
-        #     rec_systems.append(rec_sys)
     return rec_systems
 
 
