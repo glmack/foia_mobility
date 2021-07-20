@@ -15,7 +15,7 @@ def get_dos_sorns():
     rec_systems = []
     rec_sys = {}
 
-    body = soup.find('tbody')
+    table_body = soup.find('tbody')
     tr_els = body.find_all('tr')
     for tr_idx, tr_el in enumerate(tr_els):
         if tr_idx == 0: # header row of table
@@ -154,23 +154,62 @@ def get_ded_sorns():
     soup = BeautifulSoup(response.content, 'html.parser')
     rec_systems = []
     rec_sys = {}
+    tables = soup.find_all('table')
+    for table in tables:
+        tr_els = table.find_all('tr')
+        for tr_el in tr_els:
+            #th = row description
+            if tr_el.th.text == 'System of Record Notice':
+                tr_el = sorn_row_tag
+            #td = content
+    
+    return rec_systems
 
 
 def get_dod_sorns():
     """Get list of record systems of US Department of Education"""
-    url = 'https://dpcld.defense.gov/Privacy/SORNsIndex/'
+    #TODO - start from index or agency pages for url?
+    # url = 'https://dpcld.defense.gov/Privacy/SORNsIndex/'
+    # url = 'dpcld.defense.gov/Privacy/SORNs.aspx'
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     rec_systems = []
     rec_sys = {}
 
+
 def get_usda_sorns():
     """Get list of record systems of US Department of Agriculture"""
+    import requests
+    import re
     url = 'https://www.ocio.usda.gov/policy-directives-records-forms/records-management/system-records'
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     rec_systems = []
     rec_sys = {}
+
+    ul_tag = soup.find('ul', class_ = 'ul1')
+    li_tags = ul_tag.find_all('li')
+    for li_tag in li_tags:
+        name_code_text = li_tag.a.text
+        name_code_text_split = re.split(': |; |, | ', name_and_code, maxsplit=1)
+        name_code = name_code_text_split[0].strip()
+        name = name_code_text_split[1].strip()
+        doc_url = li_tag.a['href']
+        if name_and_code:
+            if name:
+                rec_sys = {'name': name}
+            else:
+                rec_sys = {'name': ''}
+            if name_code:
+                rec_sys['sorn_code'] = name_code
+            else:
+                rec_sys['sorn_code'] = ''
+            if doc_url:
+                rec_sys['doc_url'] = doc_url
+            else:
+                rec_sys['doc_url'] = ''
+            rec_systems.append(rec_sys)
+    return rec_systems
 
 def get_   _sorns():
     """Get list of ___ record systems from website"""
