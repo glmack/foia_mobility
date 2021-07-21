@@ -211,14 +211,44 @@ def get_usda_sorns():
             rec_systems.append(rec_sys)
     return rec_systems
 
-def get_   _sorns():
-    """Get list of ___ record systems from website"""
+def get_dol_sorns():
+    """Get list of record systems of US Department of Labor"""
     import requests
-    url = 
+    url = 'https://www.dol.gov/agencies/sol/privacy'
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     rec_systems = []
     rec_sys = {}
+
+    tables = soup.find_all('ul', class_ = 'usa-list')
+    for table_idx, table_el in tables:
+        if table_idx == 0:
+            pass
+        else:
+            rows = table_el.findChildren('li')
+            for row_idx, row_el in rows:
+                if row_idx == 0:
+                    scope = row_el.parent.text
+                else:
+                    name_code_text = row_el.a.text
+                    name_code_split = name_code_text.split((''))
+                    name = name_code_split[0].strip()
+                    name_code = name_code_split[1].strip()
+                    doc_url = row_el.a['href']
+                    if name:
+                        rec_sys = {'name': name}
+                    else:
+                        rec_sys = {'name': ''}
+                    if name_code:
+                        rec_sys['sorn_code'] = name_code
+                    else:
+                        rec_sys['sorn_code'] = ''
+                    if doc_url:
+                        rec_sys['doc_url'] = doc_url
+                    else:
+                        rec_sys['doc_url'] = ''
+                    rec_systems.append(rec_sys)
+    return rec_systems
 
 
 def get_   _sorns():
@@ -272,7 +302,7 @@ def get_   _sorns():
 
 # ------------------- non-executive agencies
 def get_gsa_sorns():
-    """Get list of record systems of US General Services Administration US Commerce"""
+    """Get list of record systems of US General Services Administration"""
     import requests
     url = 'https://www.gsa.gov/reference/gsa-privacy-program/systems-of-records-privacy-act/system-of-records-notices-sorns-privacy-act'
     response = requests.get(url)
